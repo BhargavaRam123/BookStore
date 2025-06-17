@@ -1,1 +1,60 @@
-<p>signup works!</p>
+<div class="maincontainer">
+  <div class="container">
+    <img src="/loginimage.png" alt="" class="imgcontainer" />
+    <form class="example-form" [formGroup]="loginForm" class="outofthebox">
+      <div class="pageshiftheader">
+        <div class="selectcontainer" (click)="toggleFunction()">
+          <div>LOGIN</div>
+          <div class="selectbar" *ngIf="toggleValue === 'login'"></div>
+        </div>
+        <div class="selectcontainer" (click)="toggleFunction()">
+          <div>SIGNUP</div>
+          <div class="selectbar" *ngIf="toggleValue === 'signup'"></div>
+        </div>
+      </div>
+      <div class="inputcont">
+        <div>Email</div>
+        <mat-form-field class="example-full-width" appearance="outline">
+          <!-- <mat-label>Email</mat-label> -->
+          <input
+            type="email"
+            matInput
+            formControlName="email"
+            placeholder="Ex. pat@example.com"
+          />
+          @if (loginForm.get('email')?.invalid &&
+          loginForm.get('email')?.touched) {
+          <mat-error>{{ getErrorMessage(loginForm, "email") }}</mat-error>
+          }
+        </mat-form-field>
+      </div>
+
+      <div class="inputcont">
+        <div>Password</div>
+        <mat-form-field class="example-full-width" appearance="outline">
+          <!-- <mat-label>Password</mat-label> -->
+          <input
+            type="email"
+            matInput
+            formControlName="password"
+            placeholder="Ex. pat@example.com"
+          />
+          @if (loginForm.get('password')?.invalid &&
+          loginForm.get('password')?.touched) {
+          <mat-error>{{ getErrorMessage(loginForm, "password") }}</mat-error>
+          }
+        </mat-form-field>
+      </div>
+      <div class="loginbtn">Login</div>
+      <div class="linecontainer">
+        <div class="line"></div>
+        <div>OR</div>
+        <div class="line"></div>
+      </div>
+      <div class="externalpopups">
+        <div class="ebtn1">Facebook</div>
+        <div class="ebtn2">Google</div>
+      </div>
+    </form>
+  </div>
+</div>

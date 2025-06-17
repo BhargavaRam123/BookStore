@@ -1,0 +1,137 @@
+.maincontainer {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgb(159, 159, 159);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.imgcontainer {
+  width: 245px;
+  height: 245px;
+  border-radius: 50%;
+  padding-right: 40px;
+  padding-left: 53px;
+}
+
+.container {
+  width: 750px;
+  height: 391px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: white;
+  border-radius: 21px;
+}
+.outofthebox {
+  height: 425px;
+  width: 389px;
+  border: 1px solid #e4e4e4;
+  box-shadow: 0px 5px 15px #00000029;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  border-radius: 6px;
+}
+
+.pageshiftheader {
+  width: 100%;
+  padding-top: 10px;
+  height: 33px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  font: normal normal medium 25px/33px Roboto;
+}
+
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.example-full-width {
+  width: 100%;
+}
+.loginbtn {
+  width: 80%;
+  height: 37px;
+  background-color: #a03037;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font: normal normal normal 15px/20px Roboto;
+}
+
+.externalpopups {
+  height: 37px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-around;
+}
+.ebtn1 {
+  width: 126px;
+  height: 37px;
+  background-color: #4266b2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 3px;
+  font: normal normal normal 12px/16px Roboto;
+  color: #ffffff;
+}
+.ebtn2 {
+  width: 126px;
+  height: 37px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 3px;
+  border: 1px solid #e4e4e4;
+  font: normal normal normal 12px/16px Roboto;
+  color: #0a0102;
+}
+.line {
+  width: 100px;
+  height: 1px;
+  background-color: grey;
+}
+
+.linecontainer {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  font: normal normal bold 14px/18px Meiryo UI;
+}
+
+.selectbar {
+  width: 22px;
+  height: 5px;
+  background: #a03037 0% 0% no-repeat padding-box;
+  border-radius: 4px;
+  opacity: 1;
+}
+.selectcontainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 41px;
+  gap: 3px;
+  cursor: pointer;
+}
+.inputcont {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  font: normal normal normal 10px/13px Roboto;
+}
