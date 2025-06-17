@@ -1,0 +1,6 @@
+projectKey=MyAngularApp
+serverUrl=http://localhost:9000
+serverVersion=25.6.0.109173
+dashboardUrl=http://localhost:9000/dashboard?id=MyAngularApp
+ceTaskId=98c75bfc-07cc-49eb-819e-7d3df00b42ad
+ceTaskUrl=http://localhost:9000/api/ce/task?id=98c75bfc-07cc-49eb-819e-7d3df00b42ad
