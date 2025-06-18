@@ -5,6 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { UserService } from '../../services/user/user.service';
 @Component({
   selector: 'app-register',
   imports: [
@@ -19,13 +20,14 @@ import { CommonModule } from '@angular/common';
 })
 export class RegisterComponent {
   signUpForm: FormGroup;
+  isSubmitting: any;
   selectedComponent = model('login');
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private userservice: UserService) {
     this.signUpForm = this.fb.group({
       fullName: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
-      mobileNumber: ['', [Validators.required, Validators.minLength(10)]],
+      phone: ['', [Validators.required, Validators.minLength(10)]],
     });
   }
   getErrorMessage(formGroup: FormGroup, controlName: string): string {
@@ -49,5 +51,29 @@ export class RegisterComponent {
   clickfunc() {
     console.log('click called');
     this.selectedComponent.set('login');
+  }
+  onSubmit() {
+    // Check if form is valid
+    if (this.signUpForm.valid) {
+      // Get form data
+      const formData = this.signUpForm.value;
+      console.log('form data value', formData);
+      // Call the service
+      this.userservice.signUp(formData).subscribe({
+        next: (response) => {
+          console.log('Registration successful:', response);
+          // Navigate to login or show success message
+          // this.selectedComponent.set('login');
+        },
+        error: (error) => {
+          console.error('Registration failed:', error);
+          // Handle error (show error message to user)
+        },
+      });
+    } else {
+      // Mark all fields as touched to show validation errors
+      this.signUpForm.markAllAsTouched();
+      console.log('Form is invalid');
+    }
   }
 }

@@ -5,6 +5,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { UserService } from '../../services/user/user.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-login',
   imports: [
@@ -20,7 +22,11 @@ import { CommonModule } from '@angular/common';
 export class LoginComponent {
   loginForm: FormGroup;
   selectedComponent = model('login');
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private userservice: UserService,
+    private router: Router
+  ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
@@ -48,5 +54,26 @@ export class LoginComponent {
   clickfunc() {
     console.log('click called');
     this.selectedComponent.set('signup');
+  }
+  onSubmit() {
+    if (this.loginForm.valid) {
+      const formData = this.loginForm.value;
+      this.userservice.logIn(formData).subscribe({
+        next: (response: any) => {
+          console.log('Login successful:', response);
+          localStorage.setItem('accessToken', response.result.accessToken);
+          this.router.navigate(['home']);
+          // Handle successful login (e.g., redirect, store token, etc.)
+        },
+        error: (error) => {
+          console.error('Login failed:', error);
+          // Handle login error (e.g., show error message)
+        },
+      });
+    } else {
+      // Mark all fields as touched to show validation errors
+      this.loginForm.markAllAsTouched();
+      console.log('Form is invalid');
+    }
   }
 }

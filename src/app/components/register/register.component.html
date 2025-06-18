@@ -63,15 +63,15 @@
       <input
         type="tel"
         matInput
-        formControlName="mobileNumber"
+        formControlName="phone"
         placeholder="Ex. 1234567890"
       />
-      @if (signUpForm.get('mobileNumber')?.invalid &&
-      signUpForm.get('mobileNumber')?.touched) {
-      <mat-error>{{ getErrorMessage(signUpForm, "mobileNumber") }}</mat-error>
+      @if (signUpForm.get('phone')?.invalid && signUpForm.get('phone')?.touched)
+      {
+      <mat-error>{{ getErrorMessage(signUpForm, "phone") }}</mat-error>
       }
     </mat-form-field>
   </div>
 
-  <div class="loginbtn">Sign Up</div>
+  <div class="loginbtn" (click)="onSubmit()">Sign Up</div>
 </form>
