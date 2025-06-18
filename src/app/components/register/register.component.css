@@ -1,8 +1,31 @@
+.outofthebox {
+  height: 500px;
+  width: 389px;
+  border: 1px solid #e4e4e4;
+  box-shadow: 0px 5px 15px #00000029;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 6px;
+}
+
+.pageshiftheader {
+  width: 100%;
+  padding-top: 30px;
+  height: 33px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  font: normal normal medium 25px/33px Roboto;
+}
+
 .inputcont {
   display: flex;
   flex-direction: column;
   width: 80%;
-  font: normal normal normal 10px/13px Roboto;
+  font: normal normal normal 13px/13px Roboto;
 }
 
 .example-full-width {
@@ -19,7 +42,6 @@
   justify-content: center;
   color: #ffffff;
   font: normal normal normal 15px/20px Roboto;
-
   margin-bottom: 30px;
 }
 
@@ -64,28 +86,6 @@
   align-items: center;
   gap: 30px;
   font: normal normal bold 14px/18px Meiryo UI;
-}
-.outofthebox {
-  height: 500px;
-  width: 389px;
-  border: 1px solid #e4e4e4;
-  box-shadow: 0px 5px 15px #00000029;
-  background-color: white;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-around;
-  border-radius: 6px;
-}
-
-.pageshiftheader {
-  width: 100%;
-  padding-top: 10px;
-  height: 33px;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  font: normal normal medium 25px/33px Roboto;
 }
 
 .example-form {
