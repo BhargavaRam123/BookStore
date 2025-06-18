@@ -1,0 +1,77 @@
+<form class="example-form" [formGroup]="signUpForm" class="outofthebox">
+  <div class="pageshiftheader">
+    <div class="selectcontainer" (click)="clickfunc()">
+      <div>LOGIN</div>
+    </div>
+    <div class="selectcontainer">
+      <div>SIGNUP</div>
+      <div class="selectbar"></div>
+    </div>
+  </div>
+
+  <div class="inputcont">
+    <div>Full Name</div>
+    <mat-form-field class="example-full-width" appearance="outline">
+      <input
+        type="text"
+        matInput
+        formControlName="fullName"
+        placeholder="Ex. John Doe"
+      />
+      @if (signUpForm.get('fullName')?.invalid &&
+      signUpForm.get('fullName')?.touched) {
+      <mat-error>{{ getErrorMessage(signUpForm, "fullName") }}</mat-error>
+      }
+    </mat-form-field>
+  </div>
+
+  <div class="inputcont">
+    <div>Email</div>
+    <mat-form-field class="example-full-width" appearance="outline">
+      <input
+        type="email"
+        matInput
+        formControlName="email"
+        placeholder="Ex. pat@example.com"
+      />
+      @if (signUpForm.get('email')?.invalid && signUpForm.get('email')?.touched)
+      {
+      <mat-error>{{ getErrorMessage(signUpForm, "email") }}</mat-error>
+      }
+    </mat-form-field>
+  </div>
+
+  <div class="inputcont">
+    <div>Password</div>
+    <mat-form-field class="example-full-width" appearance="outline">
+      <input
+        type="password"
+        matInput
+        formControlName="password"
+        placeholder="Enter your password"
+      />
+      @if (signUpForm.get('password')?.invalid &&
+      signUpForm.get('password')?.touched) {
+      <mat-error>{{ getErrorMessage(signUpForm, "password") }}</mat-error>
+      }
+    </mat-form-field>
+  </div>
+
+  <div class="inputcont">
+    <div>Mobile Number</div>
+    <mat-form-field class="example-full-width" appearance="outline">
+      <input
+        type="tel"
+        matInput
+        formControlName="mobileNumber"
+        placeholder="Ex. 1234567890"
+      />
+      @if (signUpForm.get('mobileNumber')?.invalid &&
+      signUpForm.get('mobileNumber')?.touched) {
+      <mat-error>{{ getErrorMessage(signUpForm, "mobileNumber") }}</mat-error>
+      }
+    </mat-form-field>
+  </div>
+
+  <div class="loginbtn">Sign Up</div>
+</form>

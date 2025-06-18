@@ -2,6 +2,13 @@
   <div class="container">
     <img src="/loginimage.png" alt="" class="imgcontainer" />
 
-    <app-login></app-login>
+    <app-login
+      *ngIf="selectedComponent() === 'login'"
+      [(selectedComponent)]="selectedComponent"
+    ></app-login>
+    <app-register
+      *ngIf="selectedComponent() === 'signup'"
+      [(selectedComponent)]="selectedComponent"
+    ></app-register>
   </div>
 </div>

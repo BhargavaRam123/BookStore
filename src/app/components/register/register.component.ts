@@ -6,7 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 @Component({
-  selector: 'app-login',
+  selector: 'app-register',
   imports: [
     MatSlideToggleModule,
     MatFormFieldModule,
@@ -14,18 +14,19 @@ import { CommonModule } from '@angular/common';
     ReactiveFormsModule,
     CommonModule,
   ],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.css',
+  templateUrl: './register.component.html',
+  styleUrl: './register.component.css',
 })
-export class LoginComponent {
-  loginForm: FormGroup;
+export class RegisterComponent {
+  signUpForm: FormGroup;
   selectedComponent = model('login');
   constructor(private fb: FormBuilder) {
-    this.loginForm = this.fb.group({
+    this.signUpForm = this.fb.group({
+      fullName: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
+      mobileNumber: ['', [Validators.required, Validators.minLength(10)]],
     });
-    console.log('model value is ', this.selectedComponent());
   }
   getErrorMessage(formGroup: FormGroup, controlName: string): string {
     const control = formGroup.get(controlName);
@@ -47,6 +48,6 @@ export class LoginComponent {
   }
   clickfunc() {
     console.log('click called');
-    this.selectedComponent.set('signup');
+    this.selectedComponent.set('login');
   }
 }
