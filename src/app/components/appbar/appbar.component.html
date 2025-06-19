@@ -9,32 +9,38 @@
     >
     <input type="text" class="inpcontainer" placeholder="Search" />
   </div>
-  <div class="profilecontainer" [matMenuTriggerFor]="menu">
-    <div><mat-icon class="material-symbols-sharp">person</mat-icon></div>
-    <div>Profile</div>
-    <mat-menu #menu="matMenu">
-      <div class="menucontainer">
-        <div class="heading">Welcome</div>
-        <div class="body">To access account and manage orders</div>
-        <div class="btn">LOGIN/SIGNUP</div>
-      </div>
-      <div class="linecontainer">
-        <div class="line"></div>
-      </div>
 
-      <div class="modelsub">
-        <mat-icon class="material-symbols-sharp modelimg">orders</mat-icon>
-        <div>My Orders</div>
-      </div>
+  <div class="combine">
+    <div class="profilecontainer" [matMenuTriggerFor]="menu">
+      <div><mat-icon class="material-symbols-sharp">person</mat-icon></div>
+      <div>Profile</div>
+      <mat-menu #menu="matMenu">
+        <div class="menucontainer">
+          <div class="heading">Welcome</div>
+          <div class="body">To access account and manage orders</div>
+          <div class="btn">LOGIN/SIGNUP</div>
+        </div>
+        <div class="linecontainer">
+          <div class="line"></div>
+        </div>
 
-      <div class="modelsub">
-        <mat-icon class="material-symbols-sharp modelimg">favorite</mat-icon>
-        <div>Wishlist</div>
+        <div class="modelsub">
+          <mat-icon class="material-symbols-sharp modelimg">orders</mat-icon>
+          <div>My Orders</div>
+        </div>
+
+        <div class="modelsub">
+          <mat-icon class="material-symbols-sharp modelimg">favorite</mat-icon>
+          <div>Wishlist</div>
+        </div>
+      </mat-menu>
+    </div>
+
+    <div class="cartcontainer">
+      <div>
+        <mat-icon class="material-symbols-sharp">shopping_cart</mat-icon>
       </div>
-    </mat-menu>
-  </div>
-  <div class="cartcontainer">
-    <div><mat-icon class="material-symbols-sharp">shopping_cart</mat-icon></div>
-    <div>Cart</div>
+      <div>Cart</div>
+    </div>
   </div>
 </div>

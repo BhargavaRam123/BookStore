@@ -50,22 +50,24 @@ input:focus {
   height: 100%;
   align-items: center;
   justify-content: center;
-  margin-left: 100px;
   color: #ffffff;
   padding: 0px 10px;
+  width: 55px;
   border-left: 1px solid #8f2b2f;
   border-right: 1px solid #8f2b2f;
+  width: 55px;
 }
 .cartcontainer {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-left: 50px;
+  height: 100%;
   justify-content: center;
   color: #ffffff;
   padding: 0px 10px;
   border-left: 1px solid #8f2b2f;
   border-right: 1px solid #8f2b2f;
+  width: 55px;
 }
 
 .menucontainer {
@@ -117,4 +119,10 @@ input:focus {
 }
 ::ng-deep .mat-mdc-menu-content {
   background-color: white;
+}
+.combine {
+  display: flex;
+  height: 100%;
+  margin-left: auto;
+  margin-right: auto;
 }
