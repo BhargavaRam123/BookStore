@@ -1,1 +1,20 @@
 <app-appbar></app-appbar>
+
+<div class="books-container">
+  <app-card
+    *ngFor="let book of displayedBooks; let i = index"
+    [book]="book"
+    [index]="i"
+  ></app-card>
+</div>
+<mat-paginator
+  *ngIf="totalBooks > 0"
+  [length]="totalBooks"
+  [pageSize]="pageSize"
+  [pageSizeOptions]="pageSizeOptions"
+  [pageIndex]="currentPage"
+  (page)="onPageChange($event)"
+  aria-label="Select page of books"
+  showFirstLastButtons
+>
+</mat-paginator>

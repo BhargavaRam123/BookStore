@@ -1,0 +1,8 @@
+.books-container {
+  padding-top: 50px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  /* background-color: violet; */
+  justify-content: center;
+}
