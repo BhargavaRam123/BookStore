@@ -5,46 +5,87 @@
       <div class="d1">Personal Details</div>
       <div class="d2">Edit</div>
     </div>
+
     <div class="repeating">
       <div>Full Name</div>
       <div class="searchcontainer">
-        <input type="text" class="inpcontainer" placeholder="Search" />
+        <input
+          type="text"
+          [class]="editableFields.fullName ? 'inpcontainer' : 'inpcontainerd'"
+          [disabled]="!editableFields.fullName"
+          [(ngModel)]="userFullName"
+          (click)="makeFieldEditable('fullName')"
+          (blur)="onFieldBlur('fullName')"
+          placeholder="Full Name"
+        />
       </div>
     </div>
+
     <div class="repeating">
       <div>Email id</div>
       <div>
         <div class="searchcontainer">
-          <input type="text" class="inpcontainer" placeholder="Search" />
+          <input
+            type="email"
+            [class]="editableFields.email ? 'inpcontainer' : 'inpcontainerd'"
+            [disabled]="!editableFields.email"
+            [(ngModel)]="userEmail"
+            (click)="makeFieldEditable('email')"
+            (blur)="onFieldBlur('email')"
+            placeholder="Email"
+          />
         </div>
       </div>
     </div>
+
     <div class="repeating">
       <div>Password</div>
       <div>
         <div class="searchcontainer">
-          <input type="text" class="inpcontainer" placeholder="Search" />
+          <input
+            type="password"
+            [class]="editableFields.password ? 'inpcontainer' : 'inpcontainerd'"
+            [disabled]="!editableFields.password"
+            [(ngModel)]="userPassword"
+            (click)="makeFieldEditable('password')"
+            (blur)="onFieldBlur('password')"
+            placeholder="Password"
+          />
         </div>
       </div>
     </div>
+
     <div class="repeating">
       <div>Mobile Number</div>
       <div>
         <div class="searchcontainer">
-          <input type="text" class="inpcontainer" placeholder="Search" />
+          <input
+            type="tel"
+            [class]="editableFields.phone ? 'inpcontainer' : 'inpcontainerd'"
+            [disabled]="!editableFields.phone"
+            [(ngModel)]="userPhone"
+            (click)="makeFieldEditable('phone')"
+            (blur)="onFieldBlur('phone')"
+            placeholder="Mobile Number"
+          />
         </div>
       </div>
     </div>
+
     <div class="gap"></div>
+
     <div class="address">
       <div>Address Details</div>
       <div class="addaddress">Add New Address</div>
     </div>
+
     <div class="gap2"></div>
+
     <div class="work">
       <div class="w1">1. WORK</div>
       <div class="w2">Edit</div>
     </div>
+
     <div class="repeating">
       <div>Address</div>
       <textarea
@@ -54,6 +95,7 @@
         placeholder="Enter address"
       ></textarea>
     </div>
+
     <div class="sub">
       <div class="innersub">
         <div>city/Town</div>
@@ -72,6 +114,7 @@
         </div>
       </div>
     </div>
+
     <div>
       <div>Type</div>
       <div>
