@@ -16,4 +16,17 @@ export class NotesService {
 
     return this.httpservice.getApi('bookstore_user/get/book', headers);
   }
+  getWishlistItems(): Observable<any> {
+    const accessToken = localStorage.getItem('accessToken');
+
+    const headers = new HttpHeaders({
+      accept: 'application/json',
+      'x-access-token': accessToken || '',
+    });
+
+    return this.httpservice.getApi(
+      'bookstore_user/get_wishlist_items',
+      headers
+    );
+  }
 }

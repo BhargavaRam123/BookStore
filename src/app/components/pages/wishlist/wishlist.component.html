@@ -1,1 +1,22 @@
-<p>wishlist works!</p>
+<app-appbar></app-appbar>
+
+<div class="maincontainer" *ngIf="!isLoggedIn">
+  <div class="container">
+    <div class="hcontainer">
+      <span class="heading">PLEASE LOG IN</span>
+      <span class="heading2">Login to view items in wishlist.</span>
+    </div>
+    <img src="/wishlistnologin.svg" alt="" class="imgcontainer" />
+    <div>
+      <div class="box">LOGIN/SIGNUP</div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="isLoggedIn" class="maincontainer">
+  <div class="main">
+    <div class="tablefirst">
+      <span>My Wishlist</span>
+    </div>
+  </div>
+</div>
