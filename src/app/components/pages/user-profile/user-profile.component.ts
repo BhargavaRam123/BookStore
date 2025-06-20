@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AppbarComponent } from '../../appbar/appbar.component';
+import { InputComponent } from '../../input/input.component';
 @Component({
   selector: 'app-user-profile',
   imports: [AppbarComponent],

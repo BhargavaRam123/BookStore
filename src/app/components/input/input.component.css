@@ -1,0 +1,16 @@
+.inpcontainer {
+  padding: 15px 10px 15px 50px;
+  border-radius: 5px;
+  border: none;
+  background-color: rgb(128, 128, 128, 0.2);
+  font-size: 1.1rem;
+  width: 100%;
+}
+input:focus {
+  outline: none;
+  background-color: white;
+  box-shadow: 2px 2px 5px 5px rgb(128, 128, 128, 0.2);
+}
+.searchcontainer {
+  position: relative;
+}
