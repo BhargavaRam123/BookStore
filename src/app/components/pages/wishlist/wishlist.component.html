@@ -16,7 +16,38 @@
 <div *ngIf="isLoggedIn" class="maincontainer">
   <div class="main">
     <div class="tablefirst">
-      <span>My Wishlist</span>
+      <span class="tableheading"
+        >My Wishlist ({{ wishlistitems?.length }})</span
+      >
+    </div>
+    <div
+      class="wishlist-items"
+      *ngIf="wishlistitems && wishlistitems.length > 0"
+    >
+      <div class="wishlist-item" *ngFor="let item of wishlistitems">
+        <div class="item-image">
+          <img
+            [src]="item.image || '/bookimagedefault.png'"
+            class="bookimage"
+          />
+        </div>
+        <div class="item-details">
+          <div class="item-title">{{ item.product_id.bookName }}</div>
+          <div class="item-author">by {{ item.product_id.author }}</div>
+          <div class="item-pricing">
+            <div class="current-price">
+              Rs. {{ item.product_id.discountPrice }}
+            </div>
+            <div class="original-price">Rs. {{ item.product_id.price }}</div>
+          </div>
+        </div>
+        <div
+          class="item-actions"
+          (click)="removeFromWishlist(item.product_id._id)"
+        >
+          <mat-icon class="material-symbols-sharp">delete</mat-icon>
+        </div>
+      </div>
     </div>
   </div>
 </div>

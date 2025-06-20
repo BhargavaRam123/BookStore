@@ -49,12 +49,67 @@
 }
 
 .tablefirst {
-  border: 1px solid black;
   height: 55px;
+  background: #f5f5f5 0% 0% no-repeat padding-box;
+  border: 1px solid #e4e4e4;
+  border-radius: 1px;
+  display: flex;
+  align-items: center;
 }
 
 .main {
   width: 1022px;
   display: flex;
   flex-direction: column;
+}
+.tableheading {
+  padding-left: 36px;
+  font: normal normal medium 18px/24px Roboto;
+  color: #0a0102;
+}
+
+.bookimage {
+  width: 65px;
+  padding-left: 20px;
+}
+.wishlist-item {
+  display: flex;
+  height: 175px;
+  width: 100%;
+  align-items: center;
+  border: 1px solid #e4e4e4;
+  gap: 20px;
+}
+.item-details {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 80%;
+}
+
+.item-title {
+  font: normal normal normal 18px/24px Roboto;
+  letter-spacing: 0px;
+  color: #0a0102;
+}
+.item-author {
+  font: normal normal normal 12px/16px Roboto;
+  letter-spacing: 0px;
+  color: #9d9d9d;
+}
+.current-price {
+  font: normal normal bold 15px/20px Roboto;
+  letter-spacing: 0px;
+  color: #0a0102;
+}
+.original-price {
+  text-decoration: line-through;
+  font: normal normal normal 12px/16px Roboto;
+  letter-spacing: 0px;
+  color: #9d9d9d;
+}
+
+.item-pricing {
+  display: flex;
+  gap: 5px;
 }

@@ -19,4 +19,8 @@ export class HttpService {
       headers,
     });
   }
+  deleteApi(endPoint: string, headers: HttpHeaders) {
+    let combinedUrl = this.baseurl + endPoint;
+    return this.http.delete(combinedUrl, { headers });
+  }
 }
