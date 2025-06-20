@@ -1,5 +1,6 @@
 import { Component, input, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
+import { Router } from '@angular/router';
 interface Book {
   _id: string;
   bookName: string;
@@ -24,7 +25,7 @@ interface Book {
 export class CardComponent implements OnInit {
   book = input<Book>();
   index = input();
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit() {
     console.log(
@@ -33,5 +34,15 @@ export class CardComponent implements OnInit {
       this.index(),
       this.book()?.bookName
     );
+  }
+  onCardClick() {
+    const bookData = this.book();
+
+    console.log('sending book data ', bookData);
+    if (bookData) {
+      this.router.navigate(['/product', bookData._id], {
+        state: { book: bookData },
+      });
+    }
   }
 }

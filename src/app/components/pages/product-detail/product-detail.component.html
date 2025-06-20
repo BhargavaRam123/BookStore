@@ -1,0 +1,53 @@
+<app-appbar></app-appbar>
+<div class="maincontainer">
+  <div class="container">
+    <div class="leftcontainer">
+      <div class="imagecontainer">
+        <img src="/bookimagedefault.png" alt="" />
+      </div>
+      <div class="btnflex">
+        <div class="cartbtn">add to bag</div>
+        <div class="wishlist">
+          <span> ❤︎ </span>
+          <span> wishlist </span>
+        </div>
+      </div>
+      <div></div>
+    </div>
+    <div class="rightcontainer">
+      <div class="title">{{ bookData?.bookName }}</div>
+      <div class="author">by {{ bookData?.author }}</div>
+      <div class="ratingcontainer">
+        <div class="rating">
+          <span>4.3</span>
+          <span>★</span>
+        </div>
+        <div
+          style="color: #878787; font: normal normal normal 15px/20px Roboto"
+        >
+          (20)
+        </div>
+      </div>
+      <div class="pricecontainer">
+        <div class="price">Rs. {{ bookData?.discountPrice }}</div>
+        <div class="dprice">Rs.{{ bookData?.price }}</div>
+      </div>
+      <div class="linecontainer">
+        <div class="line"></div>
+      </div>
+      <div>
+        <ul>
+          <li>
+            <div class="detail">Book Detail</div>
+            <div class="description">{{ bookData?.description }}</div>
+          </li>
+        </ul>
+      </div>
+      <div class="linecontainer">
+        <div class="line"></div>
+      </div>
+      <div class="fheading">Customer Feedback</div>
+      <app-feedbackcard></app-feedbackcard>
+    </div>
+  </div>
+</div>
