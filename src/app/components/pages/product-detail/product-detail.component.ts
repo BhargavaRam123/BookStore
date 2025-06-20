@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppbarComponent } from '../../appbar/appbar.component';
 import { FeedbackcardComponent } from '../../feedbackcard/feedbackcard.component';
+import { CommentcardComponent } from '../../commentcard/commentcard.component';
 interface Book {
   _id: string;
   bookName: string;
@@ -18,7 +19,7 @@ interface Book {
 }
 @Component({
   selector: 'app-product-detail',
-  imports: [AppbarComponent, FeedbackcardComponent],
+  imports: [AppbarComponent, FeedbackcardComponent, CommentcardComponent],
   templateUrl: './product-detail.component.html',
   styleUrl: './product-detail.component.css',
 })

@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-commentcard',
-  imports: [],
+  imports: [MatIconModule],
   templateUrl: './commentcard.component.html',
-  styleUrl: './commentcard.component.css'
+  styleUrl: './commentcard.component.css',
 })
-export class CommentcardComponent {
-
-}
+export class CommentcardComponent {}
