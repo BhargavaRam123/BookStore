@@ -44,6 +44,7 @@
     </div>
 
     <!-- Address Container - Sibling to cart container -->
+    <input type="radio" />
     <div class="address-container">
       <div class="address">
         <div>Address Details</div>
@@ -58,6 +59,12 @@
           *ngFor="let address of addresses; let i = index"
           class="address-item"
         >
+          <label class="address-radio-label">
+            <input type="radio" name="selectedAddress" [value]="address.id" />
+            <span class="radio-checkmark"></span>
+            <span class="address-label">Use this address</span>
+          </label>
+
           <div class="work">
             <div class="w1">{{ i + 1 }}. {{ address.type.toUpperCase() }}</div>
             <div class="address-actions">
@@ -174,6 +181,8 @@
         </div>
 
         <!-- Add New Address Form -->
+      </div>
+      <div class="fitcontainer">
         <div *ngIf="showAddAddressForm" class="add-address-form">
           <div class="work">
             <div class="w1">NEW ADDRESS</div>
@@ -188,7 +197,7 @@
           <div class="repeating">
             <div>Address</div>
             <textarea
-              class="form-textarea editable"
+              class="form-textarea"
               [(ngModel)]="newAddress.address"
               rows="3"
               placeholder="Enter address"
@@ -260,10 +269,10 @@
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="addressdetails">
-      <span>Order Summary</span>
+      <div class="addressdetails">
+        <span>Order Summary</span>
+      </div>
     </div>
   </div>
 </div>

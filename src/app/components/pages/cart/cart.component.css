@@ -159,7 +159,7 @@
 }
 
 input:focus {
-  outline: none;
+  /* outline: none; */
   background-color: white;
 }
 
@@ -167,7 +167,7 @@ input:focus {
   position: relative;
   box-sizing: border-box;
   width: 100%;
-  z-index: -1;
+  /* z-index: -1; */
 }
 
 .repeating {
@@ -322,6 +322,7 @@ input:focus {
   border: 1px solid black;
   width: 50%;
   display: flex;
+  flex-direction: column;
 }
 .address-item {
   width: 100%;
