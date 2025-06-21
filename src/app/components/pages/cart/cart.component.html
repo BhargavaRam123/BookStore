@@ -1,0 +1,54 @@
+<app-appbar></app-appbar>
+
+<div class="maincontainer">
+  <div class="container">
+    <div class="cart">
+      <div class="cartheader">
+        <div class="header">My Cart</div>
+        <div>
+          <div>loc</div>
+        </div>
+      </div>
+      <div>
+        <div class="wishlist-items" *ngIf="cartItems && cartItems.length > 0">
+          <div class="wishlist-item" *ngFor="let item of cartItems">
+            <div class="item-image">
+              <img
+                [src]="item.image || '/bookimagedefault.png'"
+                class="bookimage"
+              />
+            </div>
+            <div class="item-details">
+              <div class="item-title">{{ item.product_id.bookName }}</div>
+              <div class="item-author">by {{ item.product_id.author }}</div>
+              <div class="item-pricing">
+                <div class="current-price">
+                  Rs. {{ item.product_id.discountPrice }}
+                </div>
+                <div class="original-price">
+                  Rs. {{ item.product_id.price }}
+                </div>
+              </div>
+              <div class="addremove">
+                <div class="operations">-</div>
+                <input type="number" class="inpstyle" />
+                <div class="operations">+</div>
+                <span class="rem">Remove</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="btncontainer">
+        <div class="orderbtn">PLACE ORDER</div>
+      </div>
+    </div>
+
+    <div class="addressdetails">
+      <span>Address Details</span>
+    </div>
+    <div class="addressdetails">
+      <span>Order Summary</span>
+    </div>
+  </div>
+</div>

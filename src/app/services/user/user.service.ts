@@ -23,4 +23,13 @@ export class UserService {
     });
     return this.httpService.postApi(endPoint, data, header);
   }
+
+  getCartItems(token: string) {
+    let endPoint: string = 'bookstore_user/get_cart_items';
+    let header = new HttpHeaders({
+      Accept: 'application/json',
+      'x-access-token': token,
+    });
+    return this.httpService.getApi(endPoint, header);
+  }
 }
