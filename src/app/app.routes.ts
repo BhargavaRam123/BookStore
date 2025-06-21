@@ -7,6 +7,9 @@ import { ViewProductComponent } from './components/pages/view-product/view-produ
 import { ProductDetailComponent } from './components/pages/product-detail/product-detail.component';
 import { WishlistComponent } from './components/pages/wishlist/wishlist.component';
 import { CartComponent } from './components/pages/cart/cart.component';
+import { OrdersComponent } from './components/pages/orders/orders.component';
+import { ForgotpasswordComponent } from './components/pages/forgotpassword/forgotpassword.component';
+
 export const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'signin', component: SignupComponent },
@@ -15,6 +18,8 @@ export const routes: Routes = [
   { path: 'product/:id', component: ProductDetailComponent },
   { path: 'wishlist', component: WishlistComponent },
   { path: 'cart', component: CartComponent },
+  { path: 'myorders', component: OrdersComponent },
+  { path: 'forgotpassword', component: ForgotpasswordComponent },
 
   { path: '', redirectTo: '/home', pathMatch: 'full' },
 ];
