@@ -205,7 +205,7 @@ input:focus {
 }
 
 .w1 {
-  font: normal normal medium 15px/20px Roboto;
+  /* font: normal normal medium 15px/20px Roboto; */
   letter-spacing: 0px;
   color: #0a0102;
 }

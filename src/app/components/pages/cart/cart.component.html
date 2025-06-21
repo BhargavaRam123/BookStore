@@ -1,5 +1,5 @@
 <app-appbar></app-appbar>
-<div class="maincontainer">
+<div class="maincontainer" *ngIf="!issuccess">
   <div class="container">
     <div class="cart">
       <div class="cartheader">
@@ -39,12 +39,11 @@
         </div>
       </div>
       <div class="btncontainer">
-        <div class="orderbtn">PLACE ORDER</div>
+        <div class="orderbtn" (click)="placeOrder()">PLACE ORDER</div>
       </div>
     </div>
 
     <!-- Address Container - Sibling to cart container -->
-    <input type="radio" />
     <div class="address-container">
       <div class="address">
         <div>Address Details</div>
@@ -59,120 +58,133 @@
           *ngFor="let address of addresses; let i = index"
           class="address-item"
         >
-          <label class="address-radio-label">
-            <input type="radio" name="selectedAddress" [value]="address.id" />
-            <span class="radio-checkmark"></span>
-            <span class="address-label">Use this address</span>
-          </label>
-
-          <div class="work">
-            <div class="w1">{{ i + 1 }}. {{ address.type.toUpperCase() }}</div>
-            <div class="address-actions">
-              <span
-                *ngIf="!isEditing(address.id)"
-                class="w2"
-                (click)="editAddress(address.id)"
-                >Edit</span
-              >
-              <span
-                *ngIf="isEditing(address.id)"
-                class="w2"
-                (click)="saveAddress(address)"
-                >Save</span
-              >
-              <span
-                *ngIf="isEditing(address.id)"
-                class="w2 cancel"
-                (click)="cancelEdit()"
-                >Cancel</span
-              >
-              <span class="w2 delete" (click)="deleteAddress(address.id)"
-                >Delete</span
-              >
+          <div *ngIf="selectedAddressId !== address.id">
+            <input
+              type="radio"
+              name="selectedAddress"
+              [value]="address.id"
+              [checked]="selectedAddressId === address.id"
+              (change)="onAddressSelect(address.id)"
+            />
+            {{ address.address }}
+          </div>
+          <div *ngIf="selectedAddressId === address.id">
+            <div class="work">
+              <input
+                type="radio"
+                name="selectedAddress"
+                [value]="address.id"
+                [checked]="selectedAddressId === address.id"
+                (change)="onAddressSelect(address.id)"
+              />
+              <div class="w1">{{ i + 1 }}.{{ address.type.toUpperCase() }}</div>
+              <div class="address-actions">
+                <span
+                  *ngIf="!isEditing(address.id)"
+                  class="w2"
+                  (click)="editAddress(address.id)"
+                  >Edit</span
+                >
+                <span
+                  *ngIf="isEditing(address.id)"
+                  class="w2"
+                  (click)="saveAddress(address)"
+                  >Save</span
+                >
+                <span
+                  *ngIf="isEditing(address.id)"
+                  class="w2 cancel"
+                  (click)="cancelEdit()"
+                  >Cancel</span
+                >
+                <span class="w2 delete" (click)="deleteAddress(address.id)"
+                  >Delete</span
+                >
+              </div>
             </div>
-          </div>
 
-          <div class="repeating">
-            <div>Address</div>
-            <textarea
-              class="form-textaread"
-              [class.editable]="isEditing(address.id)"
-              [disabled]="!isEditing(address.id)"
-              [(ngModel)]="address.address"
-              rows="3"
-              placeholder="Enter address"
-            ></textarea>
-          </div>
+            <div class="repeating">
+              <div>Address</div>
+              <textarea
+                class="form-textaread"
+                [class.editable]="isEditing(address.id)"
+                [disabled]="!isEditing(address.id)"
+                [(ngModel)]="address.address"
+                rows="3"
+                placeholder="Enter address"
+              ></textarea>
+            </div>
 
-          <div class="sub">
-            <div class="innersub">
-              <div>City/Town</div>
-              <div>
-                <div class="searchcontainer">
-                  <input
-                    type="text"
-                    [class]="
-                      isEditing(address.id) ? 'inpcontainer' : 'inpcontainerd'
-                    "
-                    [disabled]="!isEditing(address.id)"
-                    [(ngModel)]="address.city"
-                    placeholder="City/Town"
-                  />
+            <div class="sub">
+              <div class="innersub">
+                <div>City/Town</div>
+                <div>
+                  <div class="searchcontainer">
+                    <input
+                      type="text"
+                      [class]="
+                        isEditing(address.id) ? 'inpcontainer' : 'inpcontainerd'
+                      "
+                      [disabled]="!isEditing(address.id)"
+                      [(ngModel)]="address.city"
+                      placeholder="City/Town"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="innersub">
+                <div>State</div>
+                <div>
+                  <div class="searchcontainer">
+                    <input
+                      type="text"
+                      [class]="
+                        isEditing(address.id) ? 'inpcontainer' : 'inpcontainerd'
+                      "
+                      [disabled]="!isEditing(address.id)"
+                      [(ngModel)]="address.state"
+                      placeholder="State"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="innersub">
-              <div>State</div>
-              <div>
-                <div class="searchcontainer">
-                  <input
-                    type="text"
-                    [class]="
-                      isEditing(address.id) ? 'inpcontainer' : 'inpcontainerd'
-                    "
-                    [disabled]="!isEditing(address.id)"
-                    [(ngModel)]="address.state"
-                    placeholder="State"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
 
-          <div>
-            <div>Type</div>
             <div>
-              <div class="radio-group">
-                <label class="radio-label">
-                  <input
-                    type="radio"
-                    name="addressType{{ address.id }}"
-                    [checked]="address.type === 'Home'"
-                    [disabled]="!isEditing(address.id)"
-                    (change)="onAddressTypeChange(address, 'Home')"
-                  />
-                  <span class="radio-text">Home</span>
-                </label>
-                <label class="radio-label">
-                  <input
-                    type="radio"
-                    name="addressType{{ address.id }}"
-                    [checked]="address.type === 'Work'"
-                    [disabled]="!isEditing(address.id)"
-                    (change)="onAddressTypeChange(address, 'Work')"
-                  />
-                  <span class="radio-text">Work</span>
-                </label>
-                <label class="radio-label">
-                  <input
-                    type="radio"
-                    name="addressType{{ address.id }}"
-                    [checked]="address.type === 'Other'"
-                    [disabled]="!isEditing(address.id)"
-                    (change)="onAddressTypeChange(address, 'Other')"
-                  />
-                  <span class="radio-text">Other</span>
-                </label>
+              <div>Type</div>
+              <div>
+                <div class="radio-group">
+                  <label class="radio-label">
+                    <input
+                      type="radio"
+                      name="addressType{{ address.id }}"
+                      [checked]="address.type === 'Home'"
+                      [disabled]="!isEditing(address.id)"
+                      (change)="onAddressTypeChange(address, 'Home')"
+                    />
+                    <span class="radio-text">Home</span>
+                  </label>
+                  <label class="radio-label">
+                    <input
+                      type="radio"
+                      name="addressType{{ address.id }}"
+                      [checked]="address.type === 'Work'"
+                      [disabled]="!isEditing(address.id)"
+                      (change)="onAddressTypeChange(address, 'Work')"
+                    />
+                    <span class="radio-text">Work</span>
+                  </label>
+                  <label class="radio-label">
+                    <input
+                      type="radio"
+                      name="addressType{{ address.id }}"
+                      [checked]="address.type === 'Other'"
+                      [disabled]="!isEditing(address.id)"
+                      (change)="onAddressTypeChange(address, 'Other')"
+                    />
+                    <span class="radio-text">Other</span>
+                  </label>
+                </div>
               </div>
             </div>
           </div>
@@ -269,10 +281,39 @@
           </div>
         </div>
       </div>
-
-      <div class="addressdetails">
-        <span>Order Summary</span>
+    </div>
+    <div class="cart">
+      <div class="cartheader">
+        <div class="header">Order Summary</div>
+        <div>
+          <div>loc</div>
+        </div>
+      </div>
+      <div>
+        <div class="wishlist-items" *ngIf="cartItems && cartItems.length > 0">
+          <div class="wishlist-item" *ngFor="let item of cartItems">
+            <div class="item-image">
+              <img
+                [src]="item.image || '/bookimagedefault.png'"
+                class="bookimage"
+              />
+            </div>
+            <div class="item-details">
+              <div class="item-title">{{ item.product_id.bookName }}</div>
+              <div class="item-author">by {{ item.product_id.author }}</div>
+              <div class="item-pricing">
+                <div class="current-price">
+                  Rs. {{ item.product_id.discountPrice }}
+                </div>
+                <div class="original-price">
+                  Rs. {{ item.product_id.price }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </div>
+<app-success *ngIf="issuccess"> </app-success>
