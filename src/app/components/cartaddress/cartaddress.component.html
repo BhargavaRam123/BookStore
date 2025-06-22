@@ -1,0 +1,267 @@
+<!-- Address Container -->
+<div class="address-container">
+  <div class="address">
+    <div>Address Details</div>
+    <div class="addaddress" (click)="toggleAddAddressForm()">
+      Add New Address
+    </div>
+  </div>
+
+  <div class="gap2"></div>
+  <div class="fitcontainer">
+    <!-- Existing Addresses -->
+    <div class="sub1">
+      <div class="innersub">
+        <div>Full Name</div>
+        <div>
+          <div class="searchcontainer">
+            <input
+              type="text"
+              class="inpcontainer"
+              [(ngModel)]="name"
+              readonly
+              placeholder="City/Town"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="innersub">
+        <div>Mobile Number</div>
+        <div>
+          <div class="searchcontainer">
+            <input
+              type="text"
+              class="inpcontainer"
+              [(ngModel)]="mobile"
+              readonly
+              placeholder="State"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngFor="let address of addresses; let i = index" class="address-item">
+      <div *ngIf="selectedAddressId !== address.id">
+        <input
+          type="radio"
+          name="selectedAddress"
+          [value]="address.id"
+          [checked]="selectedAddressId === address.id"
+          (change)="onAddressSelect(address.id)"
+        />
+        {{ address.address }}
+      </div>
+      <div *ngIf="selectedAddressId === address.id" class="givepadding">
+        <div class="work">
+          <input
+            type="radio"
+            name="selectedAddress"
+            [value]="address.id"
+            [checked]="selectedAddressId === address.id"
+            (change)="onAddressSelect(address.id)"
+          />
+          <div class="w1">{{ i + 1 }}.{{ address.type.toUpperCase() }}</div>
+          <div class="address-actions">
+            <span
+              *ngIf="!isEditing(address.id)"
+              class="w2"
+              (click)="editAddress(address.id)"
+              >Edit</span
+            >
+            <span
+              *ngIf="isEditing(address.id)"
+              class="w2"
+              (click)="saveAddress(address)"
+              >Save</span
+            >
+            <span
+              *ngIf="isEditing(address.id)"
+              class="w2 cancel"
+              (click)="cancelEdit()"
+              >Cancel</span
+            >
+            <span class="w2 delete" (click)="deleteAddress(address.id)"
+              >Delete</span
+            >
+          </div>
+        </div>
+        <div class="repeating">
+          <div>Address</div>
+          <textarea
+            class="form-textaread"
+            [class.editable]="isEditing(address.id)"
+            [disabled]="!isEditing(address.id)"
+            [(ngModel)]="address.address"
+            rows="3"
+            placeholder="Enter address"
+          ></textarea>
+        </div>
+
+        <div class="sub">
+          <div class="innersub">
+            <div>City/Town</div>
+            <div>
+              <div class="searchcontainer">
+                <input
+                  type="text"
+                  [class]="
+                    isEditing(address.id) ? 'inpcontainer' : 'inpcontainerd'
+                  "
+                  [disabled]="!isEditing(address.id)"
+                  [(ngModel)]="address.city"
+                  placeholder="City/Town"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="innersub">
+            <div>State</div>
+            <div>
+              <div class="searchcontainer">
+                <input
+                  type="text"
+                  [class]="
+                    isEditing(address.id) ? 'inpcontainer' : 'inpcontainerd'
+                  "
+                  [disabled]="!isEditing(address.id)"
+                  [(ngModel)]="address.state"
+                  placeholder="State"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div>Type</div>
+          <div>
+            <div class="radio-group">
+              <label class="radio-label">
+                <input
+                  type="radio"
+                  name="addressType{{ address.id }}"
+                  [checked]="address.type === 'Home'"
+                  [disabled]="!isEditing(address.id)"
+                  (change)="onAddressTypeChange(address, 'Home')"
+                />
+                <span class="radio-text">Home</span>
+              </label>
+              <label class="radio-label">
+                <input
+                  type="radio"
+                  name="addressType{{ address.id }}"
+                  [checked]="address.type === 'Work'"
+                  [disabled]="!isEditing(address.id)"
+                  (change)="onAddressTypeChange(address, 'Work')"
+                />
+                <span class="radio-text">Work</span>
+              </label>
+              <label class="radio-label">
+                <input
+                  type="radio"
+                  name="addressType{{ address.id }}"
+                  [checked]="address.type === 'Other'"
+                  [disabled]="!isEditing(address.id)"
+                  (change)="onAddressTypeChange(address, 'Other')"
+                />
+                <span class="radio-text">Other</span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="address-separator"></div>
+    </div>
+  </div>
+
+  <!-- Add New Address Form -->
+  <div class="fitcontainer">
+    <div *ngIf="showAddAddressForm" class="add-address-form">
+      <div class="work">
+        <div class="w1">NEW ADDRESS</div>
+        <div class="address-actions">
+          <span class="w2" (click)="addNewAddress()">Save</span>
+          <span class="w2 cancel" (click)="hideAddAddressForm()">Cancel</span>
+        </div>
+      </div>
+
+      <div class="repeating">
+        <div>Address</div>
+        <textarea
+          class="form-textarea"
+          [(ngModel)]="newAddress.address"
+          rows="3"
+          placeholder="Enter address"
+        ></textarea>
+      </div>
+
+      <div class="sub">
+        <div class="innersub">
+          <div>City/Town</div>
+          <div>
+            <div class="searchcontainer">
+              <input
+                type="text"
+                class="inpcontainer"
+                [(ngModel)]="newAddress.city"
+                placeholder="City/Town"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="innersub">
+          <div>State</div>
+          <div>
+            <div class="searchcontainer">
+              <input
+                type="text"
+                class="inpcontainer"
+                [(ngModel)]="newAddress.state"
+                placeholder="State"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div>Type</div>
+        <div>
+          <div class="radio-group">
+            <label class="radio-label">
+              <input
+                type="radio"
+                name="newAddressType"
+                [checked]="newAddress.type === 'Home'"
+                (change)="onNewAddressTypeChange('Home')"
+              />
+              <span class="radio-text">Home</span>
+            </label>
+            <label class="radio-label">
+              <input
+                type="radio"
+                name="newAddressType"
+                [checked]="newAddress.type === 'Work'"
+                (change)="onNewAddressTypeChange('Work')"
+              />
+              <span class="radio-text">Work</span>
+            </label>
+            <label class="radio-label">
+              <input
+                type="radio"
+                name="newAddressType"
+                [checked]="newAddress.type === 'Other'"
+                (change)="onNewAddressTypeChange('Other')"
+              />
+              <span class="radio-text">Other</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="btncontainer">
+    <div class="orderbtn">CONTINUE</div>
+  </div>
+</div>

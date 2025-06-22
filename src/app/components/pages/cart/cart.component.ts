@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SuccessComponent } from '../../success/success.component';
 import { CartcardComponent } from '../../cartcard/cartcard.component';
+import { CartaddressComponent } from '../../cartaddress/cartaddress.component';
 interface Address {
   id: string;
   address: string;
@@ -21,6 +22,7 @@ interface Address {
     CommonModule,
     FormsModule,
     CartcardComponent,
+    CartaddressComponent,
   ],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.css',
@@ -29,34 +31,16 @@ export class CartComponent implements OnInit {
   issuccess: boolean = false;
   cartItems: any;
   addresses: Address[] = [];
-  showAddAddressForm: boolean = false;
-  editingAddressId: string | null = null;
-  selectedAddressId: string | null = null; // Add this property
-
-  newAddress: Address = {
-    id: '',
-    address: '',
-    city: '',
-    state: '',
-    type: 'Home',
-  };
+  selectedAddressId: string | null = null;
 
   constructor(private userService: UserService) {}
 
   ngOnInit() {
     this.loadCartItems();
-    this.loadAddresses();
-    this.loadSelectedAddress(); // Load previously selected address
+    this.loadSelectedAddress();
   }
 
-  loadAddresses() {
-    const savedAddresses = localStorage.getItem('userAddresses');
-    if (savedAddresses) {
-      this.addresses = JSON.parse(savedAddresses);
-    }
-  }
-
-  // Add method to load selected address
+  // Load previously selected address
   loadSelectedAddress() {
     const savedSelectedAddress = localStorage.getItem('selectedAddressId');
     if (savedSelectedAddress) {
@@ -64,117 +48,28 @@ export class CartComponent implements OnInit {
     }
   }
 
-  // Add method to handle address selection
+  // Handle address selection from AddressManagerComponent
   onAddressSelect(addressId: string) {
     this.selectedAddressId = addressId;
-    // Save selected address to localStorage
-    localStorage.setItem('selectedAddressId', addressId);
-
-    // Optional: Get the full address object
-    const selectedAddress = this.addresses.find(
-      (addr) => addr.id === addressId
-    );
-    console.log('Selected Address:', selectedAddress);
-    console.log('Selected Address ID:', this.selectedAddressId);
+    console.log('Address selected in cart:', addressId);
   }
 
-  // Add method to get selected address object
+  // Handle addresses change from AddressManagerComponent
+  onAddressesChange(addresses: Address[]) {
+    this.addresses = addresses;
+  }
+
+  // Handle selected address ID change from AddressManagerComponent
+  onSelectedAddressChange(selectedAddressId: string | null) {
+    this.selectedAddressId = selectedAddressId;
+  }
+
+  // Get selected address object
   getSelectedAddress(): Address | null {
     if (!this.selectedAddressId) return null;
     return (
       this.addresses.find((addr) => addr.id === this.selectedAddressId) || null
     );
-  }
-
-  saveAddressesToLocalStorage() {
-    localStorage.setItem('userAddresses', JSON.stringify(this.addresses));
-  }
-
-  toggleAddAddressForm() {
-    this.showAddAddressForm = true;
-    this.resetNewAddressForm();
-  }
-
-  hideAddAddressForm() {
-    this.showAddAddressForm = false;
-    this.resetNewAddressForm();
-  }
-
-  resetNewAddressForm() {
-    this.newAddress = {
-      id: '',
-      address: '',
-      city: '',
-      state: '',
-      type: 'Home',
-    };
-  }
-
-  addNewAddress() {
-    if (
-      this.newAddress.address.trim() &&
-      this.newAddress.city.trim() &&
-      this.newAddress.state.trim()
-    ) {
-      const newAddr: Address = {
-        ...this.newAddress,
-        id: this.generateId(),
-      };
-
-      this.addresses.push(newAddr);
-      this.saveAddressesToLocalStorage();
-      this.hideAddAddressForm();
-
-      // Optional: Auto-select the newly added address
-      // this.onAddressSelect(newAddr.id);
-    }
-  }
-
-  editAddress(addressId: string) {
-    this.editingAddressId = addressId;
-  }
-
-  saveAddress(address: Address) {
-    const index = this.addresses.findIndex((addr) => addr.id === address.id);
-    if (index !== -1) {
-      this.addresses[index] = { ...address };
-      this.saveAddressesToLocalStorage();
-    }
-    this.editingAddressId = null;
-  }
-
-  cancelEdit() {
-    this.editingAddressId = null;
-    this.loadAddresses(); // Reload to reset any unsaved changes
-  }
-
-  deleteAddress(addressId: string) {
-    if (confirm('Are you sure you want to delete this address?')) {
-      this.addresses = this.addresses.filter((addr) => addr.id !== addressId);
-      this.saveAddressesToLocalStorage();
-
-      // Clear selection if deleted address was selected
-      if (this.selectedAddressId === addressId) {
-        this.selectedAddressId = null;
-        localStorage.removeItem('selectedAddressId');
-      }
-    }
-  }
-
-  isEditing(addressId: string): boolean {
-    return this.editingAddressId === addressId;
-  }
-
-  private generateId(): string {
-    return Date.now().toString() + Math.random().toString(36).substr(2, 9);
-  }
-
-  onAddressTypeChange(address: Address, type: string) {
-    address.type = type as 'Home' | 'Work' | 'Other';
-  }
-
-  onNewAddressTypeChange(type: string) {
-    this.newAddress.type = type as 'Home' | 'Work' | 'Other';
   }
 
   loadCartItems() {
@@ -187,7 +82,6 @@ export class CartComponent implements OnInit {
     }
     this.userService.getCartItems(token).subscribe({
       next: (response: any) => {
-        // this.loading = false;
         console.log('getting cart', response);
         if (response && response.result) {
           this.cartItems = response.result;
@@ -197,8 +91,6 @@ export class CartComponent implements OnInit {
         }
       },
       error: (error: any) => {
-        // this.loading = false;
-        // this.error = 'Failed to load cart items. Please try again.';
         console.error('Error loading cart items:', error);
       },
     });
@@ -218,6 +110,7 @@ export class CartComponent implements OnInit {
     // Your order placement logic here
     // You can use this.selectedAddressId or selectedAddress object
   }
+
   onQuantityChange(event: { item: any; action: 'increase' | 'decrease' }) {
     const { item, action } = event;
 
