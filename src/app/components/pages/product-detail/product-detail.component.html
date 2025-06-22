@@ -47,10 +47,14 @@
         <div class="line"></div>
       </div>
       <div class="fheading">Customer Feedback</div>
-      <app-feedbackcard></app-feedbackcard>
-      <app-commentcard></app-commentcard>
-      <app-commentcard></app-commentcard>
-      <app-commentcard></app-commentcard>
+      <app-feedbackcard [bookId]="bookData?._id"></app-feedbackcard>
+      <app-commentcard
+        *ngFor="let feedback of feedbacks"
+        [rating]="feedback?.rating"
+        [comment]="feedback?.comment"
+        [userName]="feedback?.user_id.fullName"
+        [createdAt]="feedback?.createdAt"
+      ></app-commentcard>
     </div>
   </div>
 </div>
