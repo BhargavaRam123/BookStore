@@ -20,10 +20,11 @@ interface Address {
 export class CartaddressComponent implements OnInit {
   @Input() addresses: Address[] = [];
   @Input() selectedAddressId: string | null = null;
-
+  @Input() stage: number = 1;
   @Output() addressSelect = new EventEmitter<string>();
   @Output() addressesChange = new EventEmitter<Address[]>();
   @Output() selectedAddressChange = new EventEmitter<string | null>();
+  @Output() stageChange = new EventEmitter<void>();
   name: string | null;
   mobile: string | null;
   showAddAddressForm: boolean = false;
@@ -42,6 +43,9 @@ export class CartaddressComponent implements OnInit {
 
   ngOnInit() {
     this.loadAddresses();
+  }
+  moveToNextStage() {
+    this.stageChange.emit();
   }
 
   loadAddresses() {

@@ -1,7 +1,7 @@
 <app-appbar></app-appbar>
 <div class="maincontainer" *ngIf="!issuccess">
   <div class="container">
-    <div class="fpart">
+    <div class="fpart" *ngIf="stage >= 1">
       <app-cartcard
         [cartItems]="cartItems"
         [addresses]="addresses"
@@ -9,26 +9,29 @@
         (placeOrder)="placeOrder()"
         (quantityChange)="onQuantityChange($event)"
         (itemRemove)="onItemRemove($event)"
+        [stage]="stage"
+        (stageChange)="onStageChange()"
       >
       </app-cartcard>
     </div>
 
+    <div class="stale" *ngIf="stage < 2">Address Details</div>
     <!-- Address Manager Component -->
-    <div class="fpart">
+    <div class="fpart" *ngIf="stage >= 2">
       <app-cartaddress
         [addresses]="addresses"
         [selectedAddressId]="selectedAddressId"
         (addressSelect)="onAddressSelect($event)"
         (addressesChange)="onAddressesChange($event)"
         (selectedAddressChange)="onSelectedAddressChange($event)"
+        [stage]="stage"
+        (stageChange)="onStageChange()"
       ></app-cartaddress>
     </div>
-    <div class="cart">
+    <div class="stale" *ngIf="stage < 3">Order Summary</div>
+    <div class="cart" *ngIf="stage >= 3">
       <div class="cartheader">
         <div class="header">Order Summary</div>
-        <div>
-          <div>loc</div>
-        </div>
       </div>
       <div>
         <div class="wishlist-items" *ngIf="cartItems && cartItems.length > 0">
@@ -53,6 +56,9 @@
             </div>
           </div>
         </div>
+      </div>
+      <div class="btncontainer" (click)="placeOrder()">
+        <div class="orderbtn">CHECKOUT</div>
       </div>
     </div>
   </div>

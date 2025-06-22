@@ -20,12 +20,13 @@ export class CartcardComponent {
   @Input() cartItems: any[] = [];
   @Input() addresses: Address[] = [];
   @Input() selectedAddress: Address | null = null;
-
+  @Input() stage: number = 1;
   @Output() placeOrder = new EventEmitter<void>();
   @Output() quantityChange = new EventEmitter<{
     item: any;
     action: 'increase' | 'decrease';
   }>();
+  @Output() stageChange = new EventEmitter<void>();
   @Output() itemRemove = new EventEmitter<any>();
 
   onPlaceOrder() {
@@ -42,5 +43,8 @@ export class CartcardComponent {
 
   removeItem(item: any) {
     this.itemRemove.emit(item);
+  }
+  moveToNextStage() {
+    this.stageChange.emit();
   }
 }

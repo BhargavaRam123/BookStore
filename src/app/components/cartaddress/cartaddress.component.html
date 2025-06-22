@@ -1,7 +1,7 @@
 <!-- Address Container -->
 <div class="address-container">
   <div class="address">
-    <div>Address Details</div>
+    <div>Customer Details</div>
     <div class="addaddress" (click)="toggleAddAddressForm()">
       Add New Address
     </div>
@@ -261,7 +261,7 @@
       </div>
     </div>
   </div>
-  <div class="btncontainer">
+  <div class="btncontainer" (click)="moveToNextStage()" *ngIf="stage === 2">
     <div class="orderbtn">CONTINUE</div>
   </div>
 </div>

@@ -50,7 +50,7 @@
       </div>
     </div>
   </div>
-  <div class="btncontainer">
-    <div class="orderbtn" (click)="onPlaceOrder()">PLACE ORDER</div>
+  <div class="btncontainer" *ngIf="stage === 1">
+    <div class="orderbtn" (click)="moveToNextStage()">PLACE ORDER</div>
   </div>
 </div>
