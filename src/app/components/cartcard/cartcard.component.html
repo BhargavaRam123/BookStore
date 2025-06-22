@@ -1,0 +1,56 @@
+<div class="cart">
+  <div class="cartheader">
+    <div class="header">My Cart</div>
+    <div class="location">
+      <div>
+        <mat-icon class="material-symbols-sharp">distance</mat-icon>
+      </div>
+      <select name="" id="" [value]="selectedAddress?.id || ''" disabled>
+        <option value="" disabled>Select delivery address</option>
+        <option
+          *ngFor="let address of addresses"
+          [value]="address.id"
+          [selected]="selectedAddress?.id === address.id"
+        >
+          {{ address.type }} - {{ address.city }}, {{ address.state }}
+        </option>
+      </select>
+    </div>
+  </div>
+  <div>
+    <div class="wishlist-items" *ngIf="cartItems && cartItems.length > 0">
+      <div class="wishlist-item" *ngFor="let item of cartItems">
+        <div class="item-image">
+          <img
+            [src]="item.image || '/bookimagedefault.png'"
+            class="bookimage"
+          />
+        </div>
+        <div class="item-details">
+          <div class="item-title">{{ item.product_id.bookName }}</div>
+          <div class="item-author">by {{ item.product_id.author }}</div>
+          <div class="item-pricing">
+            <div class="current-price">
+              Rs. {{ item.product_id.discountPrice }}
+            </div>
+            <div class="original-price">Rs. {{ item.product_id.price }}</div>
+          </div>
+          <div class="addremove">
+            <div class="operations" (click)="decreaseQuantity(item)">-</div>
+            <input
+              type="number"
+              class="inpstyle"
+              [value]="item.quantity || 1"
+              readonly
+            />
+            <div class="operations" (click)="increaseQuantity(item)">+</div>
+            <span class="rem" (click)="removeItem(item)">Remove</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="btncontainer">
+    <div class="orderbtn" (click)="onPlaceOrder()">PLACE ORDER</div>
+  </div>
+</div>

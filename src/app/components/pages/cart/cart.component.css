@@ -69,52 +69,6 @@
   gap: 5px;
 }
 
-.operations {
-  width: 24px;
-  height: 24px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50%;
-  background: #fafafa 0% 0% no-repeat padding-box;
-  border: 1px solid #dbdbdb;
-}
-
-.inpstyle {
-  width: 30px;
-  border: 1px solid #dbdbdb;
-}
-.inpstyle:focus {
-  outline: none;
-}
-.addremove {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-.rem {
-  font: normal normal normal 12px/15px Lato;
-  letter-spacing: 0px;
-  color: #0a0102;
-  padding-left: 21px;
-}
-.orderbtn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 151px;
-  height: 35px;
-  background: #3371b5 0% 0% no-repeat padding-box;
-  border-radius: 2px;
-  font: normal normal medium 14px/17px Lato;
-  letter-spacing: 0px;
-  color: #ffffff;
-}
-.btncontainer {
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-}
 .cartheader {
   width: 100%;
   display: flex;
@@ -325,5 +279,8 @@ input:focus {
   flex-direction: column;
 }
 .address-item {
+  width: 100%;
+}
+.fpart {
   width: 100%;
 }

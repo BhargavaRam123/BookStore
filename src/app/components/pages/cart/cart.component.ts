@@ -4,6 +4,7 @@ import { UserService } from '../../../services/user/user.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SuccessComponent } from '../../success/success.component';
+import { CartcardComponent } from '../../cartcard/cartcard.component';
 interface Address {
   id: string;
   address: string;
@@ -14,12 +15,18 @@ interface Address {
 
 @Component({
   selector: 'app-cart',
-  imports: [AppbarComponent, SuccessComponent, CommonModule, FormsModule],
+  imports: [
+    AppbarComponent,
+    SuccessComponent,
+    CommonModule,
+    FormsModule,
+    CartcardComponent,
+  ],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.css',
 })
 export class CartComponent implements OnInit {
-  issuccess: boolean = true;
+  issuccess: boolean = false;
   cartItems: any;
   addresses: Address[] = [];
   showAddAddressForm: boolean = false;
@@ -210,5 +217,35 @@ export class CartComponent implements OnInit {
 
     // Your order placement logic here
     // You can use this.selectedAddressId or selectedAddress object
+  }
+  onQuantityChange(event: { item: any; action: 'increase' | 'decrease' }) {
+    const { item, action } = event;
+
+    if (action === 'increase') {
+      // Implement quantity increase logic
+      if (!item.quantity) item.quantity = 1;
+      item.quantity++;
+    } else if (action === 'decrease') {
+      // Implement quantity decrease logic
+      if (!item.quantity) item.quantity = 1;
+      if (item.quantity > 1) {
+        item.quantity--;
+      }
+    }
+
+    // You might want to update the cart in your backend/service here
+    // this.userService.updateCartItemQuantity(item.id, item.quantity).subscribe();
+  }
+
+  onItemRemove(item: any) {
+    if (confirm('Are you sure you want to remove this item from cart?')) {
+      // Remove item from cartItems array
+      this.cartItems = this.cartItems.filter(
+        (cartItem: any) => cartItem.id !== item.id
+      );
+
+      // You might want to update the cart in your backend/service here
+      // this.userService.removeFromCart(item.id).subscribe();
+    }
   }
 }

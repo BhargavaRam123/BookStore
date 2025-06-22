@@ -1,0 +1,132 @@
+.cart {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border: 1px solid #707070;
+  border-radius: 1px;
+}
+
+.bookimage {
+  width: 65px;
+  padding-left: 20px;
+}
+.wishlist-item {
+  display: flex;
+  height: 155px;
+  width: 100%;
+  align-items: center;
+  gap: 20px;
+}
+.item-details {
+  display: flex;
+  flex-direction: column;
+  height: 55%;
+  justify-content: flex-start;
+  gap: 5px;
+  width: 80%;
+}
+
+.item-title {
+  font: normal normal normal 18px/24px Roboto;
+  letter-spacing: 0px;
+  color: #0a0102;
+}
+.item-author {
+  font: normal normal normal 12px/16px Roboto;
+  letter-spacing: 0px;
+  color: #9d9d9d;
+}
+.current-price {
+  font: normal normal bold 15px/20px Roboto;
+  letter-spacing: 0px;
+  color: #0a0102;
+}
+.original-price {
+  text-decoration: line-through;
+  font: normal normal normal 12px/16px Roboto;
+  letter-spacing: 0px;
+  color: #9d9d9d;
+}
+
+.item-pricing {
+  display: flex;
+  gap: 5px;
+}
+
+.operations {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background: #fafafa 0% 0% no-repeat padding-box;
+  border: 1px solid #dbdbdb;
+}
+
+.inpstyle {
+  width: 30px;
+  border: 1px solid #dbdbdb;
+  text-align: center;
+  padding: 0px;
+}
+.inpstyle:focus {
+  outline: none;
+}
+.addremove {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.rem {
+  font: normal normal normal 12px/15px Lato;
+  letter-spacing: 0px;
+  color: #0a0102;
+  padding-left: 21px;
+}
+.orderbtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 151px;
+  height: 35px;
+  background: #3371b5 0% 0% no-repeat padding-box;
+  border-radius: 2px;
+  font: normal normal medium 14px/17px Lato;
+  letter-spacing: 0px;
+  color: #ffffff;
+}
+.btncontainer {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px 20px;
+  box-sizing: border-box;
+}
+.cartheader {
+  width: 100%;
+  display: flex;
+  padding: 10px 20px;
+  padding-bottom: 0px;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+.header {
+  font: normal normal medium 18px/22px Lato;
+  letter-spacing: 0px;
+  color: #0a0102;
+}
+
+.location {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 275px;
+  height: 40px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  border: 1px solid #dcdcdc;
+  border-radius: 1px;
+}
+select {
+  border: none;
+}
