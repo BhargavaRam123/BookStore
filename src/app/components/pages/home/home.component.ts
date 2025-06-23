@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { AppbarComponent } from '../../appbar/appbar.component';
 import { NotesService } from '../../../services/notes/notes.service';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { CommonModule } from '@angular/common';
 import { CardComponent } from '../../card/card.component';
+import { SignupComponent } from '../signup/signup.component';
 interface Book {
   _id: string;
   bookName: string;
@@ -21,12 +22,19 @@ interface Book {
 
 @Component({
   selector: 'app-home',
-  imports: [AppbarComponent, MatPaginatorModule, CommonModule, CardComponent],
+  imports: [
+    AppbarComponent,
+    MatPaginatorModule,
+    CommonModule,
+    CardComponent,
+    SignupComponent,
+  ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
 export class HomeComponent implements OnInit {
   // Pagination properties
+  showModal = signal(false);
   allBooks: Book[] = [];
   displayedBooks: Book[] = [];
   totalBooks = 0;
@@ -66,5 +74,8 @@ export class HomeComponent implements OnInit {
     const startIndex = this.currentPage * this.pageSize;
     const endIndex = startIndex + this.pageSize;
     this.displayedBooks = this.allBooks.slice(startIndex, endIndex);
+  }
+  closeModal() {
+    this.showModal.set(false);
   }
 }

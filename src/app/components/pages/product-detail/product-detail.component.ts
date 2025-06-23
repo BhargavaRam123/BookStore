@@ -107,7 +107,7 @@ export class ProductDetailComponent implements OnInit {
 
           if (cartItem) {
             this.isInCart = true;
-            this.cartQuantity = cartItem.quantity || 1;
+            this.cartQuantity = cartItem.product_id.quantity || 1;
           } else {
             this.isInCart = false;
             this.cartQuantity = 1;

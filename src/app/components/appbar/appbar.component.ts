@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
@@ -8,4 +8,11 @@ import { MatButtonModule } from '@angular/material/button';
   templateUrl: './appbar.component.html',
   styleUrl: './appbar.component.css',
 })
-export class AppbarComponent {}
+export class AppbarComponent {
+  showModal = input(false);
+  showModalChange = output<boolean>();
+
+  onLoginSignupClick() {
+    this.showModalChange.emit(true);
+  }
+}
