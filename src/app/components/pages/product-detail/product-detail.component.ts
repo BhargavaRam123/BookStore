@@ -175,19 +175,23 @@ export class ProductDetailComponent implements OnInit {
   increaseQuantity() {
     if (!this.bookData?._id) return;
 
-    this.notesService.addToCart(this.bookData._id).subscribe({
-      next: (response) => {
-        console.log('Quantity increased:', response);
-        this.cartQuantity++;
-        this.cartMessage = 'Quantity updated!';
-        this.clearCartMessageAfterDelay();
-      },
-      error: (error) => {
-        console.error('Error increasing quantity:', error);
-        this.cartMessage = 'Failed to update quantity';
-        this.clearCartMessageAfterDelay();
-      },
-    });
+    const newQuantity = this.cartQuantity + 1;
+
+    this.notesService
+      .updateCartItemQuantity(this.bookData._id, newQuantity)
+      .subscribe({
+        next: (response) => {
+          console.log('Quantity increased:', response);
+          this.cartQuantity = newQuantity;
+          this.cartMessage = 'Quantity updated!';
+          this.clearCartMessageAfterDelay();
+        },
+        error: (error) => {
+          console.error('Error increasing quantity:', error);
+          this.cartMessage = 'Failed to update quantity';
+          this.clearCartMessageAfterDelay();
+        },
+      });
   }
 
   // Method to decrease quantity
@@ -199,19 +203,23 @@ export class ProductDetailComponent implements OnInit {
 
     if (!this.bookData?._id) return;
 
-    this.notesService.removeCartItem(this.bookData._id).subscribe({
-      next: (response) => {
-        console.log('Quantity decreased:', response);
-        this.cartQuantity--;
-        this.cartMessage = 'Quantity updated!';
-        this.clearCartMessageAfterDelay();
-      },
-      error: (error) => {
-        console.error('Error decreasing quantity:', error);
-        this.cartMessage = 'Failed to update quantity';
-        this.clearCartMessageAfterDelay();
-      },
-    });
+    const newQuantity = this.cartQuantity - 1;
+
+    this.notesService
+      .updateCartItemQuantity(this.bookData._id, newQuantity)
+      .subscribe({
+        next: (response) => {
+          console.log('Quantity decreased:', response);
+          this.cartQuantity = newQuantity;
+          this.cartMessage = 'Quantity updated!';
+          this.clearCartMessageAfterDelay();
+        },
+        error: (error) => {
+          console.error('Error decreasing quantity:', error);
+          this.cartMessage = 'Failed to update quantity';
+          this.clearCartMessageAfterDelay();
+        },
+      });
   }
 
   // Method to remove from cart

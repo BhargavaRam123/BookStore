@@ -8,10 +8,12 @@ export class HttpService {
   baseurl: string = 'https://bookstore.incubation.bridgelabz.com/';
 
   constructor(private http: HttpClient) {}
+
   getApi(endPoint: string, headers: HttpHeaders) {
     let combinedUrl = this.baseurl + endPoint;
     return this.http.get(combinedUrl, { headers });
   }
+
   postApi(endPoint: string, body: any, headers: HttpHeaders) {
     let combinedUrl = this.baseurl + endPoint;
 
@@ -19,6 +21,15 @@ export class HttpService {
       headers,
     });
   }
+
+  putApi(endPoint: string, body: any, headers: HttpHeaders) {
+    let combinedUrl = this.baseurl + endPoint;
+
+    return this.http.put(combinedUrl, (body = JSON.stringify(body)), {
+      headers,
+    });
+  }
+
   deleteApi(endPoint: string, headers: HttpHeaders) {
     let combinedUrl = this.baseurl + endPoint;
     return this.http.delete(combinedUrl, { headers });

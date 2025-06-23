@@ -156,4 +156,25 @@ export class NotesService {
       headers
     );
   }
+
+  // NEW METHOD: Update cart item quantity directly
+  updateCartItemQuantity(bookId: string, quantity: number): Observable<any> {
+    const accessToken = localStorage.getItem('accessToken');
+
+    const headers = new HttpHeaders({
+      accept: 'application/json',
+      'Content-Type': 'application/json',
+      'x-access-token': accessToken || '',
+    });
+
+    const body = {
+      quantityToBuy: quantity,
+    };
+
+    return this.httpservice.putApi(
+      `bookstore_user/cart_item_quantity/${bookId}`,
+      body,
+      headers
+    );
+  }
 }
