@@ -1,5 +1,5 @@
 <div class="mainnav">
-  <div class="logocontainer">
+  <div class="logocontainer" (click)="toHome()">
     <div><img src="/education.svg" alt="" /></div>
     <div>Bookstore</div>
   </div>
@@ -16,27 +16,47 @@
       <div>Profile</div>
       <mat-menu #menu="matMenu">
         <div class="menucontainer">
-          <div class="heading">Welcome</div>
-          <div class="body">To access account and manage orders</div>
-          <div class="btn" (click)="openModal()">LOGIN/SIGNUP</div>
+          <div
+            class="heading"
+            *ngIf="accessToken()"
+            style="padding-bottom: 10px"
+          >
+            Hello {{ getName() }},
+          </div>
+          <div class="heading" *ngIf="!accessToken()">Welcome</div>
+          <div class="body" *ngIf="!accessToken()">
+            To access account and manage orders
+          </div>
+          <div class="btn" (click)="openModal()" *ngIf="!accessToken()">
+            LOGIN/SIGNUP
+          </div>
         </div>
-        <div class="linecontainer">
+        <div class="linecontainer" *ngIf="!accessToken()">
           <div class="line"></div>
         </div>
 
+        <div class="modelsub" *ngIf="accessToken()" (click)="toProfile()">
+          <mat-icon class="material-symbols-sharp modelimg"
+            >account_circle</mat-icon
+          >
+          <div>Profile</div>
+        </div>
         <div class="modelsub">
           <mat-icon class="material-symbols-sharp modelimg">orders</mat-icon>
           <div>My Orders</div>
         </div>
 
-        <div class="modelsub">
+        <div class="modelsub" (click)="toWishList()">
           <mat-icon class="material-symbols-sharp modelimg">favorite</mat-icon>
           <div>Wishlist</div>
+        </div>
+        <div class="logout" (click)="onLogout()" *ngIf="accessToken()">
+          <div>Logout</div>
         </div>
       </mat-menu>
     </div>
 
-    <div class="cartcontainer">
+    <div class="cartcontainer" (click)="toCart()">
       <div>
         <mat-icon class="material-symbols-sharp">shopping_cart</mat-icon>
       </div>
