@@ -6,12 +6,56 @@
         <img src="/bookimagedefault.png" alt="" />
       </div>
       <div class="btnflex">
-        <div class="cartbtn">add to bag</div>
+        <!-- Show Add to Cart button when item is not in cart -->
+        <div
+          *ngIf="!isInCart"
+          class="cartbtn"
+          (click)="addToCart()"
+          [class.disabled]="addingToCart"
+        >
+          {{ addingToCart ? "Adding..." : "add to bag" }}
+        </div>
+
+        <!-- Show add/remove component when item is in cart -->
+        <div *ngIf="isInCart" class="addremove">
+          <div class="operations" (click)="decreaseQuantity()">-</div>
+
+          <div class="inpstyle">{{ cartQuantity }}</div>
+          <div class="operations" (click)="increaseQuantity()">+</div>
+        </div>
+
         <div class="wishlist" (click)="addToWishlist()">
           <span> ❤︎ </span>
           <span> wishlist </span>
         </div>
       </div>
+
+      <!-- Cart message display -->
+      <div *ngIf="cartMessage" class="message-container">
+        <div
+          class="message"
+          [class.error]="
+            cartMessage.includes('Failed') ||
+            cartMessage.includes('Please log in')
+          "
+        >
+          {{ cartMessage }}
+        </div>
+      </div>
+
+      <!-- Wishlist message display -->
+      <div *ngIf="wishlistMessage" class="message-container">
+        <div
+          class="message"
+          [class.error]="
+            wishlistMessage.includes('Failed') ||
+            wishlistMessage.includes('Please log in')
+          "
+        >
+          {{ wishlistMessage }}
+        </div>
+      </div>
+
       <div></div>
     </div>
     <div class="rightcontainer">

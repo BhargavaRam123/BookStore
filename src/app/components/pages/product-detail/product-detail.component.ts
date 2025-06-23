@@ -41,6 +41,12 @@ export class ProductDetailComponent implements OnInit {
   addingToWishlist: boolean = false; // Loading state for wishlist button
   wishlistMessage: string = ''; // Success/error message
 
+  // New properties for cart functionality
+  isInCart: boolean = false;
+  cartQuantity: number = 1;
+  addingToCart: boolean = false;
+  cartMessage: string = '';
+
   constructor(private router: Router, private notesService: NotesService) {
     const navigation = this.router.getCurrentNavigation();
     if (navigation?.extras.state) {
@@ -55,6 +61,7 @@ export class ProductDetailComponent implements OnInit {
   ngOnInit() {
     if (this.bookData?._id) {
       this.loadFeedback();
+      this.checkIfInCart(); // Check if item is already in cart
     }
   }
 
@@ -74,6 +81,155 @@ export class ProductDetailComponent implements OnInit {
       error: (error) => {
         console.error('Error loading feedback:', error);
         this.loading = false;
+      },
+    });
+  }
+
+  // Check if item is already in cart
+  checkIfInCart() {
+    this.getCartItems();
+  }
+
+  // Get cart items to check current state
+  getCartItems() {
+    const accessToken = localStorage.getItem('accessToken');
+    if (!accessToken) {
+      this.isInCart = false;
+      return;
+    }
+
+    this.notesService.getCartItems().subscribe({
+      next: (response) => {
+        if (response.result && Array.isArray(response.result)) {
+          const cartItem = response.result.find(
+            (item: any) => item.product_id._id === this.bookData?._id
+          );
+
+          if (cartItem) {
+            this.isInCart = true;
+            this.cartQuantity = cartItem.quantity || 1;
+          } else {
+            this.isInCart = false;
+            this.cartQuantity = 1;
+          }
+        }
+      },
+      error: (error) => {
+        console.error('Error getting cart items:', error);
+        this.isInCart = false;
+      },
+    });
+  }
+
+  // Method to add book to cart
+  addToCart() {
+    if (!this.bookData?._id) {
+      console.error('No book data available');
+      return;
+    }
+
+    // Check if user is logged in (has access token)
+    const accessToken = localStorage.getItem('accessToken');
+    if (!accessToken) {
+      this.cartMessage = 'Please log in to add items to cart';
+      this.clearCartMessageAfterDelay();
+      return;
+    }
+
+    this.addingToCart = true;
+    this.cartMessage = '';
+
+    this.notesService.addToCart(this.bookData._id).subscribe({
+      next: (response) => {
+        console.log('Add to cart response:', response);
+        this.addingToCart = false;
+        this.isInCart = true;
+
+        // Check if item was already in cart or newly added
+        if (response.message && response.message.includes('already added')) {
+          this.cartMessage = 'Item quantity increased in cart!';
+        } else {
+          this.cartMessage = 'Book added to cart successfully!';
+        }
+
+        this.clearCartMessageAfterDelay();
+        this.getCartItems(); // Refresh cart to get current quantity
+      },
+      error: (error) => {
+        console.error('Error adding to cart:', error);
+        this.addingToCart = false;
+
+        // Handle different error scenarios
+        if (error.status === 401) {
+          this.cartMessage = 'Please log in to add items to cart';
+        } else {
+          this.cartMessage = 'Failed to add book to cart. Please try again.';
+        }
+
+        this.clearCartMessageAfterDelay();
+      },
+    });
+  }
+
+  // Method to increase quantity
+  increaseQuantity() {
+    if (!this.bookData?._id) return;
+
+    this.notesService.addToCart(this.bookData._id).subscribe({
+      next: (response) => {
+        console.log('Quantity increased:', response);
+        this.cartQuantity++;
+        this.cartMessage = 'Quantity updated!';
+        this.clearCartMessageAfterDelay();
+      },
+      error: (error) => {
+        console.error('Error increasing quantity:', error);
+        this.cartMessage = 'Failed to update quantity';
+        this.clearCartMessageAfterDelay();
+      },
+    });
+  }
+
+  // Method to decrease quantity
+  decreaseQuantity() {
+    if (this.cartQuantity <= 1) {
+      this.removeFromCart();
+      return;
+    }
+
+    if (!this.bookData?._id) return;
+
+    this.notesService.removeCartItem(this.bookData._id).subscribe({
+      next: (response) => {
+        console.log('Quantity decreased:', response);
+        this.cartQuantity--;
+        this.cartMessage = 'Quantity updated!';
+        this.clearCartMessageAfterDelay();
+      },
+      error: (error) => {
+        console.error('Error decreasing quantity:', error);
+        this.cartMessage = 'Failed to update quantity';
+        this.clearCartMessageAfterDelay();
+      },
+    });
+  }
+
+  // Method to remove from cart
+  removeFromCart() {
+    if (!this.bookData?._id) return;
+
+    this.notesService.removeCartItem(this.bookData._id).subscribe({
+      next: (response) => {
+        console.log('Removed from cart:', response);
+        this.isInCart = false;
+        this.cartQuantity = 1;
+        this.cartMessage = 'Book removed from cart';
+        this.clearCartMessageAfterDelay();
+      },
+      error: (error) => {
+        console.error('Error removing from cart:', error);
+        this.cartMessage = 'Failed to remove book from cart';
+        this.clearCartMessageAfterDelay();
       },
     });
   }
@@ -120,6 +276,13 @@ export class ProductDetailComponent implements OnInit {
         this.clearMessageAfterDelay();
       },
     });
+  }
+
+  // Helper method to clear cart messages after a delay
+  private clearCartMessageAfterDelay() {
+    setTimeout(() => {
+      this.cartMessage = '';
+    }, 3000); // Clear message after 3 seconds
   }
 
   // Helper method to clear messages after a delay

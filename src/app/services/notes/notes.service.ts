@@ -96,6 +96,7 @@ export class NotesService {
       headers
     );
   }
+
   addToWishlist(bookId: string): Observable<any> {
     const accessToken = localStorage.getItem('accessToken');
 
@@ -107,6 +108,51 @@ export class NotesService {
     return this.httpservice.postApi(
       `bookstore_user/add_wish_list/${bookId}`,
       {}, // Empty body as the API doesn't seem to require any data in the body
+      headers
+    );
+  }
+
+  // CART METHODS
+
+  // Method to add item to cart (also increases quantity if already exists)
+  addToCart(bookId: string): Observable<any> {
+    const accessToken = localStorage.getItem('accessToken');
+
+    const headers = new HttpHeaders({
+      accept: 'application/json',
+      'x-access-token': accessToken || '',
+    });
+
+    return this.httpservice.postApi(
+      `bookstore_user/add_cart_item/${bookId}`,
+      {}, // Empty body as the API doesn't require any data in the body
+      headers
+    );
+  }
+
+  // Method to get cart items
+  getCartItems(): Observable<any> {
+    const accessToken = localStorage.getItem('accessToken');
+
+    const headers = new HttpHeaders({
+      accept: 'application/json',
+      'x-access-token': accessToken || '',
+    });
+
+    return this.httpservice.getApi('bookstore_user/get_cart_items', headers);
+  }
+
+  // Method to remove cart item (decreases quantity by 1, removes if quantity becomes 0)
+  removeCartItem(bookId: string): Observable<any> {
+    const accessToken = localStorage.getItem('accessToken');
+
+    const headers = new HttpHeaders({
+      accept: 'application/json',
+      'x-access-token': accessToken || '',
+    });
+
+    return this.httpservice.deleteApi(
+      `bookstore_user/remove_cart_item/${bookId}`,
       headers
     );
   }
