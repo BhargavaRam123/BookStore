@@ -38,6 +38,8 @@ export class ProductDetailComponent implements OnInit {
   averageRating: number = 0;
   totalRatings: number = 0;
   loading: boolean = false;
+  addingToWishlist: boolean = false; // Loading state for wishlist button
+  wishlistMessage: string = ''; // Success/error message
 
   constructor(private router: Router, private notesService: NotesService) {
     const navigation = this.router.getCurrentNavigation();
@@ -74,6 +76,57 @@ export class ProductDetailComponent implements OnInit {
         this.loading = false;
       },
     });
+  }
+
+  // Method to add book to wishlist
+  addToWishlist() {
+    if (!this.bookData?._id) {
+      console.error('No book data available');
+      return;
+    }
+
+    // Check if user is logged in (has access token)
+    const accessToken = localStorage.getItem('accessToken');
+    if (!accessToken) {
+      this.wishlistMessage = 'Please log in to add items to wishlist';
+      this.clearMessageAfterDelay();
+      return;
+    }
+
+    this.addingToWishlist = true;
+    this.wishlistMessage = '';
+
+    this.notesService.addToWishlist(this.bookData._id).subscribe({
+      next: (response) => {
+        console.log('Add to wishlist response:', response);
+        this.addingToWishlist = false;
+        this.wishlistMessage = 'Book added to wishlist successfully!';
+        this.clearMessageAfterDelay();
+      },
+      error: (error) => {
+        console.error('Error adding to wishlist:', error);
+        this.addingToWishlist = false;
+
+        // Handle different error scenarios
+        if (error.status === 401) {
+          this.wishlistMessage = 'Please log in to add items to wishlist';
+        } else if (error.status === 409) {
+          this.wishlistMessage = 'Book is already in your wishlist';
+        } else {
+          this.wishlistMessage =
+            'Failed to add book to wishlist. Please try again.';
+        }
+
+        this.clearMessageAfterDelay();
+      },
+    });
+  }
+
+  // Helper method to clear messages after a delay
+  private clearMessageAfterDelay() {
+    setTimeout(() => {
+      this.wishlistMessage = '';
+    }, 3000); // Clear message after 3 seconds
   }
 
   // Helper method to get full name with null checks

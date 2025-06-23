@@ -96,4 +96,18 @@ export class NotesService {
       headers
     );
   }
+  addToWishlist(bookId: string): Observable<any> {
+    const accessToken = localStorage.getItem('accessToken');
+
+    const headers = new HttpHeaders({
+      accept: 'application/json',
+      'x-access-token': accessToken || '',
+    });
+
+    return this.httpservice.postApi(
+      `bookstore_user/add_wish_list/${bookId}`,
+      {}, // Empty body as the API doesn't seem to require any data in the body
+      headers
+    );
+  }
 }
