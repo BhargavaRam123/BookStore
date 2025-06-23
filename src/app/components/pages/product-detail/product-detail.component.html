@@ -1,4 +1,7 @@
 <app-appbar></app-appbar>
+<div class="modelcontainer" *ngIf="getModalState()" (click)="closeModal()">
+  <app-signup></app-signup>
+</div>
 <div class="maincontainer">
   <div class="container">
     <div class="leftcontainer">

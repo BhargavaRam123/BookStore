@@ -1,6 +1,6 @@
-<app-appbar [(showModal)]="showModal"></app-appbar>
-<div class="modelcontainer" *ngIf="showModal()" (click)="closeModal()">
-  <app-signup (close)="closeModal()"></app-signup>
+<app-appbar></app-appbar>
+<div class="modelcontainer" *ngIf="getModalState()" (click)="closeModal()">
+  <app-signup></app-signup>
 </div>
 <div class="maincontainer">
   <div class="books-container">

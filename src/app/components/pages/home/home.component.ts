@@ -5,6 +5,7 @@ import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { CommonModule } from '@angular/common';
 import { CardComponent } from '../../card/card.component';
 import { SignupComponent } from '../signup/signup.component';
+import { ModalService } from '../../../services/commonservice/modal.service';
 interface Book {
   _id: string;
   bookName: string;
@@ -42,7 +43,22 @@ export class HomeComponent implements OnInit {
   currentPage = 0;
   pageSizeOptions = [5, 10, 25, 50];
 
-  constructor(private notesService: NotesService) {}
+  constructor(
+    private notesService: NotesService,
+    private modalService: ModalService
+  ) {}
+  // Updated method to use the modal service
+  closeModal() {
+    this.modalService.closeModal();
+  }
+
+  // Additional methods for modal control
+  openModal() {
+    this.modalService.openModal();
+  }
+  getModalState() {
+    return this.modalService.getModalState();
+  }
 
   ngOnInit() {
     this.loadBooks();
@@ -74,8 +90,5 @@ export class HomeComponent implements OnInit {
     const startIndex = this.currentPage * this.pageSize;
     const endIndex = startIndex + this.pageSize;
     this.displayedBooks = this.allBooks.slice(startIndex, endIndex);
-  }
-  closeModal() {
-    this.showModal.set(false);
   }
 }

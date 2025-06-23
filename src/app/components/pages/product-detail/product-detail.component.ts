@@ -5,7 +5,8 @@ import { FeedbackcardComponent } from '../../feedbackcard/feedbackcard.component
 import { CommentcardComponent } from '../../commentcard/commentcard.component';
 import { NotesService } from '../../../services/notes/notes.service';
 import { CommonModule } from '@angular/common';
-
+import { ModalService } from '../../../services/commonservice/modal.service';
+import { SignupComponent } from '../signup/signup.component';
 interface Book {
   _id: string;
   bookName: string;
@@ -28,6 +29,7 @@ interface Book {
     FeedbackcardComponent,
     CommentcardComponent,
     CommonModule,
+    SignupComponent,
   ],
   templateUrl: './product-detail.component.html',
   styleUrl: './product-detail.component.css',
@@ -47,7 +49,11 @@ export class ProductDetailComponent implements OnInit {
   addingToCart: boolean = false;
   cartMessage: string = '';
 
-  constructor(private router: Router, private notesService: NotesService) {
+  constructor(
+    private router: Router,
+    private notesService: NotesService,
+    private modalService: ModalService
+  ) {
     const navigation = this.router.getCurrentNavigation();
     if (navigation?.extras.state) {
       const bookData = navigation.extras.state['book'];
@@ -56,6 +62,19 @@ export class ProductDetailComponent implements OnInit {
     } else {
       this.bookData = null;
     }
+  }
+
+  // Updated method to use the modal service
+  closeModal() {
+    this.modalService.closeModal();
+  }
+
+  // Additional methods for modal control
+  openModal() {
+    this.modalService.openModal();
+  }
+  getModalState() {
+    return this.modalService.getModalState();
   }
 
   ngOnInit() {
