@@ -1,16 +1,36 @@
 <app-appbar></app-appbar>
+
 <div class="modelcontainer" *ngIf="getModalState()" (click)="closeModal()">
   <app-signup></app-signup>
 </div>
+
 <div class="maincontainer">
   <div class="books-container">
-    <div class="books">Books({{ allBooks.length }} items)</div>
+    <div class="books">{{ getDisplayText() }}</div>
+
+    <!-- Show message when no books found -->
+    <div
+      *ngIf="filteredBooks.length === 0 && currentSearchQuery"
+      class="no-results"
+    >
+      <p>No books found for "{{ currentSearchQuery }}"</p>
+      <p>Try searching with different keywords or browse all books.</p>
+    </div>
+
+    <!-- Show message when no books at all -->
+    <div *ngIf="allBooks.length === 0 && !currentSearchQuery" class="no-books">
+      <p>No books available at the moment.</p>
+    </div>
+
+    <!-- Display books -->
     <app-card
       *ngFor="let book of displayedBooks; let i = index"
       [book]="book"
       [index]="i"
     ></app-card>
   </div>
+
+  <!-- Pagination -->
   <mat-paginator
     *ngIf="totalBooks > 0"
     [length]="totalBooks"

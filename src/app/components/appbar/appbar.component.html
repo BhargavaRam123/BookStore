@@ -3,11 +3,22 @@
     <div><img src="/education.svg" alt="" /></div>
     <div>Bookstore</div>
   </div>
+
   <div class="searchcontainer">
-    <mat-icon class="search-icon menuicon material-symbols-sharp"
-      >search</mat-icon
+    <mat-icon
+      class="search-icon menuicon material-symbols-sharp"
+      (click)="onSearchSubmit()"
     >
-    <input type="text" class="inpcontainer" placeholder="Search" />
+      search
+    </mat-icon>
+    <input
+      type="text"
+      class="inpcontainer"
+      placeholder="Search books, authors..."
+      [(ngModel)]="searchQuery"
+      (input)="onSearchInput($event)"
+      (keyup.enter)="onSearchSubmit()"
+    />
   </div>
 
   <div class="combine">
@@ -36,9 +47,9 @@
         </div>
 
         <div class="modelsub" *ngIf="accessToken()" (click)="toProfile()">
-          <mat-icon class="material-symbols-sharp modelimg"
-            >account_circle</mat-icon
-          >
+          <mat-icon class="material-symbols-sharp modelimg">
+            account_circle
+          </mat-icon>
           <div>Profile</div>
         </div>
         <div class="modelsub">
