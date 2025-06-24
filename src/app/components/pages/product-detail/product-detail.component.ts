@@ -40,10 +40,9 @@ export class ProductDetailComponent implements OnInit {
   averageRating: number = 0;
   totalRatings: number = 0;
   loading: boolean = false;
-  addingToWishlist: boolean = false; // Loading state for wishlist button
-  wishlistMessage: string = ''; // Success/error message
+  addingToWishlist: boolean = false;
+  wishlistMessage: string = '';
 
-  // New properties for cart functionality
   isInCart: boolean = false;
   cartQuantity: number = 1;
   addingToCart: boolean = false;
@@ -64,12 +63,10 @@ export class ProductDetailComponent implements OnInit {
     }
   }
 
-  // Updated method to use the modal service
   closeModal() {
     this.modalService.closeModal();
   }
 
-  // Additional methods for modal control
   openModal() {
     this.modalService.openModal();
   }
@@ -80,7 +77,7 @@ export class ProductDetailComponent implements OnInit {
   ngOnInit() {
     if (this.bookData?._id) {
       this.loadFeedback();
-      this.checkIfInCart(); // Check if item is already in cart
+      this.checkIfInCart();
     }
   }
 
@@ -104,12 +101,10 @@ export class ProductDetailComponent implements OnInit {
     });
   }
 
-  // Check if item is already in cart
   checkIfInCart() {
     this.getCartItems();
   }
 
-  // Get cart items to check current state
   getCartItems() {
     const accessToken = localStorage.getItem('accessToken');
     if (!accessToken) {
@@ -140,14 +135,12 @@ export class ProductDetailComponent implements OnInit {
     });
   }
 
-  // Method to add book to cart
   addToCart() {
     if (!this.bookData?._id) {
       console.error('No book data available');
       return;
     }
 
-    // Check if user is logged in (has access token)
     const accessToken = localStorage.getItem('accessToken');
     if (!accessToken) {
       this.cartMessage = 'Please log in to add items to cart';
@@ -164,7 +157,6 @@ export class ProductDetailComponent implements OnInit {
         this.addingToCart = false;
         this.isInCart = true;
 
-        // Check if item was already in cart or newly added
         if (response.message && response.message.includes('already added')) {
           this.cartMessage = 'Item quantity increased in cart!';
         } else {
@@ -172,13 +164,12 @@ export class ProductDetailComponent implements OnInit {
         }
 
         this.clearCartMessageAfterDelay();
-        this.getCartItems(); // Refresh cart to get current quantity
+        this.getCartItems();
       },
       error: (error) => {
         console.error('Error adding to cart:', error);
         this.addingToCart = false;
 
-        // Handle different error scenarios
         if (error.status === 401) {
           this.cartMessage = 'Please log in to add items to cart';
         } else {
