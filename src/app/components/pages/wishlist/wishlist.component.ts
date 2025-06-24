@@ -3,6 +3,7 @@ import { AppbarComponent } from '../../appbar/appbar.component';
 import { CommonModule } from '@angular/common';
 import { NotesService } from '../../../services/notes/notes.service';
 import { MatIconModule } from '@angular/material/icon';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-wishlist',
@@ -14,7 +15,7 @@ export class WishlistComponent implements OnInit {
   isLoggedIn: boolean = false;
   wishlistitems: any;
   isRemoving: { [key: string]: boolean } = {};
-  constructor(private notesservice: NotesService) {}
+  constructor(private notesservice: NotesService, private router: Router) {}
   ngOnInit(): void {
     this.checkAuthStatus();
     this.notesservice.getWishlistItems().subscribe({
@@ -51,5 +52,8 @@ export class WishlistComponent implements OnInit {
         this.isRemoving[productId] = false;
       },
     });
+  }
+  tohome() {
+    this.router.navigate(['home']);
   }
 }

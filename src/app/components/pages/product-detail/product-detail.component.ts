@@ -330,4 +330,7 @@ export class ProductDetailComponent implements OnInit {
 
     return `${first} ${last}`.trim() || 'Anonymous User';
   }
+  tohome() {
+    this.router.navigate(['home']);
+  }
 }

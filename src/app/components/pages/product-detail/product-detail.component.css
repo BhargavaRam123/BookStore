@@ -14,9 +14,11 @@
 }
 .maincontainer {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   padding-top: 100px;
+  gap: 10px;
 }
 
 .cartbtn {

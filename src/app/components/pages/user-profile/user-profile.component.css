@@ -196,20 +196,12 @@ input:focus {
 
 @media screen and (max-width: 770px) {
   .container {
-    /* display: flex;
-    flex-direction: column;
-    width: 512px;
-    gap: 10px; */
     margin-left: 50px;
   }
 }
 
 @media screen and (max-width: 580px) {
   .container {
-    /* display: flex; */
-    /* flex-direction: column; */
     width: 300px;
-    /* gap: 10px; */
-    /* margin-left: 50px; */
   }
 }

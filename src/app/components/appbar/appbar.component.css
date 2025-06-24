@@ -10,6 +10,7 @@
   align-items: center;
   height: 60px;
   background-color: #a03037;
+  z-index: 1000;
   /* justify-content: space-around; */
 }
 .logocontainer {

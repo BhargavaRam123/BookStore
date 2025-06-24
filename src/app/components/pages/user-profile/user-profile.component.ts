@@ -3,6 +3,7 @@ import { AppbarComponent } from '../../appbar/appbar.component';
 import { InputComponent } from '../../input/input.component';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 interface Address {
   id: string;
@@ -19,6 +20,7 @@ interface Address {
   styleUrl: './user-profile.component.css',
 })
 export class UserProfileComponent implements OnInit {
+  constructor(private router: Router) {}
   userFullName: string = '';
   userEmail: string = '';
   userPassword: string = '';
@@ -167,5 +169,8 @@ export class UserProfileComponent implements OnInit {
 
   onNewAddressTypeChange(type: string) {
     this.newAddress.type = type as 'Home' | 'Work' | 'Other';
+  }
+  tohome() {
+    this.router.navigate(['home']);
   }
 }

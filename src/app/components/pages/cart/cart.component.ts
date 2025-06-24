@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { SuccessComponent } from '../../success/success.component';
 import { CartcardComponent } from '../../cartcard/cartcard.component';
 import { CartaddressComponent } from '../../cartaddress/cartaddress.component';
+import { Router } from '@angular/router';
 
 interface Address {
   id: string;
@@ -39,7 +40,8 @@ export class CartComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private notesService: NotesService // Add NotesService
+    private notesService: NotesService, // Add NotesService
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -208,5 +210,8 @@ export class CartComponent implements OnInit {
     return this.cartItems.reduce((total: number, item: any) => {
       return total + (item.quantityToBuy || 1);
     }, 0);
+  }
+  tohome() {
+    this.router.navigate(['home']);
   }
 }
