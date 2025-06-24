@@ -131,3 +131,24 @@
   padding-left: 20px;
   box-sizing: border-box;
 }
+@media screen and (max-width: 1000px) {
+  .container {
+    /* display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; */
+    width: 500px;
+    /* gap: 40px; */
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .container {
+    /* display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; */
+    width: 300px;
+    /* gap: 40px; */
+  }
+}

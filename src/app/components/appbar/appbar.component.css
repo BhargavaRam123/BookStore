@@ -140,3 +140,23 @@ input:focus {
   align-items: center;
   padding: 10px 0px;
 }
+
+@media screen and (max-width: 750px) {
+  .logocontainer {
+    margin-left: 50px;
+  }
+}
+@media screen and (max-width: 630px) {
+  .searchcontainer {
+    padding-right: 0px;
+    width: 20%;
+    margin-left: 10px;
+  }
+}
+@media screen and (max-width: 580px) {
+  .logocontainer {
+    display: none;
+  }
+}
+@media screen and (max-width: 360px) {
+}
