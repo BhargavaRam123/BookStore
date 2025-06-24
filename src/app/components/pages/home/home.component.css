@@ -12,6 +12,11 @@
   display: flex;
   flex-direction: column; */
 }
+select {
+  border: 1px solid #e2e2e2;
+  border-radius: 1px;
+  padding: 5px;
+}
 .page {
   position: fixed;
   bottom: 0;
@@ -20,6 +25,8 @@
 .books {
   width: 100%;
   padding-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
 }
 .modelcontainer {
   position: fixed;

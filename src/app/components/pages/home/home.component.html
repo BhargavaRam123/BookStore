@@ -6,7 +6,12 @@
 
 <div class="maincontainer">
   <div class="books-container">
-    <div class="books">{{ getDisplayText() }}</div>
+    <div class="books">
+      <div>{{ getDisplayText() }}</div>
+      <select>
+        <option>Sort by relavance</option>
+      </select>
+    </div>
 
     <!-- Show message when no books found -->
     <div
