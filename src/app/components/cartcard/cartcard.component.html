@@ -40,7 +40,7 @@
             <input
               type="number"
               class="inpstyle"
-              [value]="item.product_id.quantity || 1"
+              [value]="item.quantityToBuy || 1"
               readonly
             />
             <div class="operations" (click)="increaseQuantity(item)">+</div>

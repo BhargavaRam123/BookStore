@@ -175,9 +175,6 @@ export class CartComponent implements OnInit {
         item.quantityToBuy--;
       }
     }
-
-    // You might want to update the cart in your backend/service here
-    // this.userService.updateCartItemQuantity(item.id, item.quantityToBuy).subscribe();
   }
 
   onItemRemove(item: any) {
@@ -186,9 +183,6 @@ export class CartComponent implements OnInit {
       this.cartItems = this.cartItems.filter(
         (cartItem: any) => cartItem._id !== item._id
       );
-
-      // You might want to update the cart in your backend/service here
-      // this.userService.removeFromCart(item._id).subscribe();
     }
   }
 
@@ -203,7 +197,6 @@ export class CartComponent implements OnInit {
     }, 0);
   }
 
-  // Helper method to get total items count
   getTotalItems(): number {
     if (!this.cartItems || this.cartItems.length === 0) return 0;
 

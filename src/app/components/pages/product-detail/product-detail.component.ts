@@ -42,7 +42,7 @@ export class ProductDetailComponent implements OnInit {
   loading: boolean = false;
   addingToWishlist: boolean = false;
   wishlistMessage: string = '';
-
+  apiid: string = '';
   isInCart: boolean = false;
   cartQuantity: number = 1;
   addingToCart: boolean = false;
@@ -77,6 +77,7 @@ export class ProductDetailComponent implements OnInit {
   ngOnInit() {
     if (this.bookData?._id) {
       this.loadFeedback();
+      this.getCartItems();
       this.checkIfInCart();
     }
   }
@@ -115,13 +116,15 @@ export class ProductDetailComponent implements OnInit {
     this.notesService.getCartItems().subscribe({
       next: (response) => {
         if (response.result && Array.isArray(response.result)) {
+          console.log('response result value', response.result);
           const cartItem = response.result.find(
             (item: any) => item.product_id._id === this.bookData?._id
           );
 
           if (cartItem) {
             this.isInCart = true;
-            this.cartQuantity = cartItem.product_id.quantity || 1;
+            this.cartQuantity = cartItem.quantityToBuy || 1;
+            this.apiid = cartItem._id;
           } else {
             this.isInCart = false;
             this.cartQuantity = 1;
@@ -184,11 +187,13 @@ export class ProductDetailComponent implements OnInit {
   // Method to increase quantity
   increaseQuantity() {
     if (!this.bookData?._id) return;
-
+    console.log('book data value', this.bookData);
     const newQuantity = this.cartQuantity + 1;
+    console.log('new quantity value', newQuantity);
 
+    console.log('apiid value', this.apiid);
     this.notesService
-      .updateCartItemQuantity(this.bookData._id, newQuantity)
+      .updateCartItemQuantity(this.apiid, newQuantity)
       .subscribe({
         next: (response) => {
           console.log('Quantity increased:', response);
