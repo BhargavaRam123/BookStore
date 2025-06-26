@@ -25,3 +25,12 @@
   background-color: white;
   border-radius: 21px;
 }
+@media screen and (max-width: 780px) {
+  .imgcontainer {
+    display: none;
+  }
+  .container {
+    justify-content: center;
+    background-color: rgba(231, 238, 236, 0.4);
+  }
+}

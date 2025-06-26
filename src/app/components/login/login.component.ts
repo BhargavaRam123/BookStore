@@ -6,6 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../../services/user/user.service';
+import { ModalService } from '../../services/commonservice/modal.service';
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-login',
@@ -25,7 +26,8 @@ export class LoginComponent {
   constructor(
     private fb: FormBuilder,
     private userservice: UserService,
-    private router: Router
+    private router: Router,
+    private modalservice: ModalService
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -63,6 +65,7 @@ export class LoginComponent {
           console.log('Login successful:', response);
           localStorage.setItem('accessToken', response.result.accessToken);
           this.router.navigate(['home']);
+          this.modalservice.closeModal();
           // Handle successful login (e.g., redirect, store token, etc.)
         },
         error: (error) => {

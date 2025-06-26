@@ -1,4 +1,13 @@
-import { Component, input, output, OnInit, OnDestroy } from '@angular/core';
+import {
+  Component,
+  input,
+  output,
+  OnInit,
+  OnDestroy,
+  Inject,
+  PLATFORM_ID,
+} from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
@@ -30,7 +39,8 @@ export class AppbarComponent implements OnInit, OnDestroy {
   constructor(
     private modalService: ModalService,
     private router: Router,
-    private searchService: SearchService
+    private searchService: SearchService,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   ngOnInit() {
@@ -83,15 +93,23 @@ export class AppbarComponent implements OnInit, OnDestroy {
   }
 
   getName() {
-    return localStorage.getItem('userFullName');
+    if (isPlatformBrowser(this.platformId)) {
+      return localStorage.getItem('userFullName');
+    }
+    return null;
   }
 
   accessToken(): string | null {
-    return localStorage.getItem('accessToken');
+    if (isPlatformBrowser(this.platformId)) {
+      return localStorage.getItem('accessToken');
+    }
+    return null;
   }
 
   onLogout() {
-    localStorage.setItem('accessToken', '');
-    this.router.navigate(['/home']);
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.setItem('accessToken', '');
+      this.router.navigate(['/home']);
+    }
   }
 }
