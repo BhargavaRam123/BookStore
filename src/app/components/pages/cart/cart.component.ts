@@ -177,12 +177,30 @@ export class CartComponent implements OnInit {
     }
   }
 
+  // Updated onItemRemove method for CartComponent using NotesService
+
   onItemRemove(item: any) {
     if (confirm('Are you sure you want to remove this item from cart?')) {
-      // Remove item from cartItems array
-      this.cartItems = this.cartItems.filter(
-        (cartItem: any) => cartItem._id !== item._id
-      );
+      // Use the cart item's _id as the cartItem_id for the API call
+      const cartItemId = item._id;
+
+      this.notesService.removeCartItem(cartItemId).subscribe({
+        next: (response: any) => {
+          console.log('Item removed successfully:', response);
+
+          // Remove item from local cartItems array after successful API call
+          this.cartItems = this.cartItems.filter(
+            (cartItem: any) => cartItem._id !== item._id
+          );
+
+          // Optional: Show success message
+          console.log('Item removed from cart');
+        },
+        error: (error: any) => {
+          console.error('Error removing item from cart:', error);
+          alert('Failed to remove item from cart. Please try again.');
+        },
+      });
     }
   }
 

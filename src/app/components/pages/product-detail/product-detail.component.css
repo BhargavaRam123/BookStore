@@ -31,6 +31,7 @@
   justify-content: center;
   color: #ffffff;
   font: normal normal normal 15px/20px Roboto;
+  cursor: pointer;
 }
 .wishlist {
   width: 170px;
@@ -46,12 +47,13 @@
   justify-content: center;
   align-items: center;
   gap: 5px;
+  cursor: pointer;
 }
 .btnflex {
   display: flex;
   width: 361px;
   height: 40px;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
 }
 .leftcontainer {
@@ -154,6 +156,7 @@ ul {
   border-radius: 50%;
   background: #fafafa 0% 0% no-repeat padding-box;
   border: 1px solid #dcdcdc;
+  cursor: pointer;
 }
 .inpstyle {
   width: 30px;

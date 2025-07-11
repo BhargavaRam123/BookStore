@@ -7,6 +7,7 @@ import { NotesService } from '../../../services/notes/notes.service';
 import { CommonModule } from '@angular/common';
 import { ModalService } from '../../../services/commonservice/modal.service';
 import { SignupComponent } from '../signup/signup.component';
+
 interface Book {
   _id: string;
   bookName: string;
@@ -48,6 +49,10 @@ export class ProductDetailComponent implements OnInit {
   addingToCart: boolean = false;
   cartMessage: string = '';
 
+  // New wishlist properties
+  isInWishlist: boolean = false;
+  wishlistItemId: string = '';
+
   constructor(
     private router: Router,
     private notesService: NotesService,
@@ -70,6 +75,7 @@ export class ProductDetailComponent implements OnInit {
   openModal() {
     this.modalService.openModal();
   }
+
   getModalState() {
     return this.modalService.getModalState();
   }
@@ -79,6 +85,7 @@ export class ProductDetailComponent implements OnInit {
       this.loadFeedback();
       this.getCartItems();
       this.checkIfInCart();
+      this.checkIfInWishlist(); // Add this line
     }
   }
 
@@ -98,6 +105,38 @@ export class ProductDetailComponent implements OnInit {
       error: (error) => {
         console.error('Error loading feedback:', error);
         this.loading = false;
+      },
+    });
+  }
+
+  // New method to check if book is in wishlist
+  checkIfInWishlist() {
+    const accessToken = localStorage.getItem('accessToken');
+    if (!accessToken) {
+      this.isInWishlist = false;
+      return;
+    }
+
+    this.notesService.getWishlistItems().subscribe({
+      next: (response) => {
+        if (response.result && Array.isArray(response.result)) {
+          console.log('Wishlist items:', response.result);
+          const wishlistItem = response.result.find(
+            (item: any) => item.product_id._id === this.bookData?._id
+          );
+
+          if (wishlistItem) {
+            this.isInWishlist = true;
+            this.wishlistItemId = wishlistItem._id;
+          } else {
+            this.isInWishlist = false;
+            this.wishlistItemId = '';
+          }
+        }
+      },
+      error: (error) => {
+        console.error('Error getting wishlist items:', error);
+        this.isInWishlist = false;
       },
     });
   }
@@ -184,7 +223,6 @@ export class ProductDetailComponent implements OnInit {
     });
   }
 
-  // Method to increase quantity
   increaseQuantity() {
     if (!this.bookData?._id) return;
     console.log('book data value', this.bookData);
@@ -209,7 +247,6 @@ export class ProductDetailComponent implements OnInit {
       });
   }
 
-  // Method to decrease quantity
   decreaseQuantity() {
     if (this.cartQuantity <= 1) {
       this.removeFromCart();
@@ -237,7 +274,6 @@ export class ProductDetailComponent implements OnInit {
       });
   }
 
-  // Method to remove from cart
   removeFromCart() {
     if (!this.bookData?._id) return;
 
@@ -257,40 +293,49 @@ export class ProductDetailComponent implements OnInit {
     });
   }
 
-  // Method to add book to wishlist
-  addToWishlist() {
+  // Updated wishlist method - now toggles between add and remove
+  toggleWishlist() {
     if (!this.bookData?._id) {
       console.error('No book data available');
       return;
     }
 
-    // Check if user is logged in (has access token)
     const accessToken = localStorage.getItem('accessToken');
     if (!accessToken) {
-      this.wishlistMessage = 'Please log in to add items to wishlist';
+      this.wishlistMessage = 'Please log in to manage wishlist';
       this.clearMessageAfterDelay();
       return;
     }
 
+    if (this.isInWishlist) {
+      this.removeFromWishlist();
+    } else {
+      this.addToWishlist();
+    }
+  }
+
+  addToWishlist() {
     this.addingToWishlist = true;
     this.wishlistMessage = '';
 
-    this.notesService.addToWishlist(this.bookData._id).subscribe({
+    this.notesService.addToWishlist(this.bookData!._id).subscribe({
       next: (response) => {
         console.log('Add to wishlist response:', response);
         this.addingToWishlist = false;
+        this.isInWishlist = true;
         this.wishlistMessage = 'Book added to wishlist successfully!';
         this.clearMessageAfterDelay();
+        this.checkIfInWishlist(); // Refresh wishlist status
       },
       error: (error) => {
         console.error('Error adding to wishlist:', error);
         this.addingToWishlist = false;
 
-        // Handle different error scenarios
         if (error.status === 401) {
           this.wishlistMessage = 'Please log in to add items to wishlist';
         } else if (error.status === 409) {
           this.wishlistMessage = 'Book is already in your wishlist';
+          this.isInWishlist = true; // Update status if it's already in wishlist
         } else {
           this.wishlistMessage =
             'Failed to add book to wishlist. Please try again.';
@@ -301,21 +346,42 @@ export class ProductDetailComponent implements OnInit {
     });
   }
 
-  // Helper method to clear cart messages after a delay
+  // New method to remove from wishlist
+  removeFromWishlist() {
+    this.addingToWishlist = true;
+    this.wishlistMessage = '';
+
+    this.notesService.removeWishlistItem(this.bookData!._id).subscribe({
+      next: (response) => {
+        console.log('Remove from wishlist response:', response);
+        this.addingToWishlist = false;
+        this.isInWishlist = false;
+        this.wishlistItemId = '';
+        this.wishlistMessage = 'Book removed from wishlist successfully!';
+        this.clearMessageAfterDelay();
+      },
+      error: (error) => {
+        console.error('Error removing from wishlist:', error);
+        this.addingToWishlist = false;
+        this.wishlistMessage =
+          'Failed to remove book from wishlist. Please try again.';
+        this.clearMessageAfterDelay();
+      },
+    });
+  }
+
   private clearCartMessageAfterDelay() {
     setTimeout(() => {
       this.cartMessage = '';
-    }, 3000); // Clear message after 3 seconds
+    }, 3000);
   }
 
-  // Helper method to clear messages after a delay
   private clearMessageAfterDelay() {
     setTimeout(() => {
       this.wishlistMessage = '';
-    }, 3000); // Clear message after 3 seconds
+    }, 3000);
   }
 
-  // Helper method to get full name with null checks
   getUserFullName(firstName?: string, lastName?: string): string {
     if (!firstName && !lastName) {
       return 'Anonymous User';
@@ -326,6 +392,7 @@ export class ProductDetailComponent implements OnInit {
 
     return `${first} ${last}`.trim() || 'Anonymous User';
   }
+
   tohome() {
     this.router.navigate(['home']);
   }

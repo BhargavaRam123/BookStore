@@ -28,14 +28,32 @@
         <!-- Show add/remove component when item is in cart -->
         <div *ngIf="isInCart" class="addremove">
           <div class="operations" (click)="decreaseQuantity()">-</div>
-
           <div class="inpstyle">{{ cartQuantity }}</div>
           <div class="operations" (click)="increaseQuantity()">+</div>
         </div>
 
-        <div class="wishlist" (click)="addToWishlist()">
-          <span> ❤︎ </span>
-          <span> wishlist </span>
+        <!-- Updated wishlist button with toggle functionality -->
+        <div
+          class="wishlist"
+          (click)="toggleWishlist()"
+          [class.in-wishlist]="isInWishlist"
+          [class.adding]="addingToWishlist"
+        >
+          <span *ngIf="!addingToWishlist">
+            {{ isInWishlist ? "💖" : "🤍" }}
+          </span>
+          <span *ngIf="addingToWishlist"> ⏳ </span>
+          <span>
+            {{
+              addingToWishlist
+                ? isInWishlist
+                  ? "Removing..."
+                  : "Adding..."
+                : isInWishlist
+                ? "In Wishlist"
+                : "Wishlist"
+            }}
+          </span>
         </div>
       </div>
 
@@ -46,6 +64,12 @@
           [class.error]="
             cartMessage.includes('Failed') ||
             cartMessage.includes('Please log in')
+          "
+          [class.success]="
+            cartMessage.includes('successfully') ||
+            cartMessage.includes('added') ||
+            cartMessage.includes('updated') ||
+            cartMessage.includes('increased')
           "
         >
           {{ cartMessage }}
@@ -59,6 +83,11 @@
           [class.error]="
             wishlistMessage.includes('Failed') ||
             wishlistMessage.includes('Please log in')
+          "
+          [class.success]="
+            wishlistMessage.includes('successfully') ||
+            wishlistMessage.includes('added') ||
+            wishlistMessage.includes('removed')
           "
         >
           {{ wishlistMessage }}

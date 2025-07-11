@@ -6,6 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../../services/user/user.service';
+import { ModalService } from '../../services/commonservice/modal.service';
 
 @Component({
   selector: 'app-register',
@@ -24,7 +25,11 @@ export class RegisterComponent {
   isSubmitting: any;
   selectedComponent = model('login');
 
-  constructor(private fb: FormBuilder, private userservice: UserService) {
+  constructor(
+    private fb: FormBuilder,
+    private userservice: UserService,
+    private modalservice: ModalService
+  ) {
     this.signUpForm = this.fb.group({
       fullName: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
@@ -105,9 +110,7 @@ export class RegisterComponent {
           this.storeUserDataInLocalStorage(formData, response);
 
           this.isSubmitting = false;
-
-          // Navigate to login or show success message
-          // this.selectedComponent.set('login');
+          this.modalservice.closeModal();
         },
         error: (error) => {
           console.error('Registration failed:', error);

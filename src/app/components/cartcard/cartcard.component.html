@@ -37,12 +37,9 @@
           </div>
           <div class="addremove">
             <div class="operations" (click)="decreaseQuantity(item)">-</div>
-            <input
-              type="number"
-              class="inpstyle"
-              [value]="item.quantityToBuy || 1"
-              readonly
-            />
+
+            <div class="inpstyle">{{ item.quantityToBuy }}</div>
+
             <div class="operations" (click)="increaseQuantity(item)">+</div>
             <span class="rem" (click)="removeItem(item)">Remove</span>
           </div>

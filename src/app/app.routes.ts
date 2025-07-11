@@ -8,14 +8,14 @@ import { WishlistComponent } from './components/pages/wishlist/wishlist.componen
 import { CartComponent } from './components/pages/cart/cart.component';
 import { OrdersComponent } from './components/pages/orders/orders.component';
 import { ForgotpasswordComponent } from './components/pages/forgotpassword/forgotpassword.component';
-
+import { AuthGuard } from './auth.guard';
 export const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'signin', component: SignupComponent },
   { path: 'userprofile', component: UserProfileComponent },
   { path: 'product/:id', component: ProductDetailComponent },
   { path: 'wishlist', component: WishlistComponent },
-  { path: 'cart', component: CartComponent },
+  { path: 'cart', component: CartComponent, canActivate: [AuthGuard] },
   { path: 'myorders', component: OrdersComponent },
   { path: 'forgotpassword', component: ForgotpasswordComponent },
 

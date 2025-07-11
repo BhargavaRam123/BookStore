@@ -97,6 +97,7 @@ input:focus {
   justify-content: center;
   align-items: center;
   color: #a03037;
+  cursor: pointer;
 }
 .linecontainer {
   background-color: white;
@@ -115,6 +116,7 @@ input:focus {
   background-color: white;
   color: #878787;
   padding: 5px 20px;
+  cursor: pointer;
 }
 
 .modelimg {
@@ -140,6 +142,7 @@ input:focus {
   justify-content: center;
   align-items: center;
   padding: 10px 0px;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 750px) {
